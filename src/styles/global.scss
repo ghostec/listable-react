@@ -3,7 +3,7 @@
 $primary-color: #333333;
 $secondary-color: #95989A;
 
-$mobile: new-breakpoint(max-width 500px 12);
+$mobile: new-breakpoint(max-width 1000px 12);
 
 @mixin primary-font($size: 14px, $color: $primary-color, $weight: 400) {
   font-family: 'Lora', serif;
