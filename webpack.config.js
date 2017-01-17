@@ -1,6 +1,10 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+const sassPaths = require("bourbon-neat").includePaths.map(
+  (sassPath) => "includePaths[]=" + sassPath
+).join("&");
+
 module.exports = {
   entry: './src',
   output: {
@@ -15,7 +19,7 @@ module.exports = {
     rules: [
       {
         loader: ExtractTextPlugin.extract({
-          loader: ['css-loader', 'sass-loader']
+          loader: "css-loader!sass-loader?" + sassPaths
         }),
         test: /\.scss$/
       }

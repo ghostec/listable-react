@@ -1,1 +1,1 @@
-body{background:blue}
+html{box-sizing:border-box}*,:after,:before{box-sizing:inherit}body{background:blue}section{max-width:1200px;margin-left:auto;margin-right:auto}section:after{clear:both;content:"";display:block}section header{float:left;display:block;margin-right:2.35765%;width:23.23176%}section header:last-child{margin-right:0}section section{float:left;display:block;margin-right:2.35765%;width:74.41059%}section section:last-child{margin-right:0}
