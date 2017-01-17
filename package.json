@@ -11,6 +11,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-react": "^6.16.0",
     "bourbon-neat": "^1.8.0",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
@@ -19,9 +23,13 @@
     "node-sass": "^4.3.0",
     "nodemon": "^1.11.0",
     "sass-loader": "^4.1.1",
-    "webpack": "^2.2.0-rc.0"
+    "webpack": "^2.2.0-rc.0",
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "mongoose": "^4.7.6"
+    "mongoose": "^4.7.6",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "uniloc": "^0.3.0"
   }
 }

@@ -1,14 +1,17 @@
-const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const sassPaths = require("bourbon-neat").includePaths.map(
   (sassPath) => "includePaths[]=" + sassPath
 ).join("&");
 
+const APP_DIR = path.resolve(__dirname, 'src');
+const BUILD_DIR = path.resolve(__dirname, 'build');
+
 module.exports = {
-  entry: './src',
+  entry: APP_DIR,
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: BUILD_DIR,
     filename: 'bundle.js',
     publicPath: '/build/'
   },
@@ -17,6 +20,15 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        loader: 'babel-loader',
+        include: APP_DIR,
+        exclude: /node_modules/,
+        query: {
+          presets: ['babel-preset-env', 'react']
+        },
+        test: /\.js$/
+      },
       {
         loader: ExtractTextPlugin.extract({
           loader: "css-loader!sass-loader?" + sassPaths
@@ -28,4 +40,4 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin('style.css')
   ]
-}
+};
