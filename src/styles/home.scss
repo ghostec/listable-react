@@ -1,0 +1,49 @@
+@import 'global';
+
+home-list-filters {
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+  margin-top: 10px;
+  margin-bottom: 30px;
+  @include secondary-font(16px, $secondary-color);
+
+  ul {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0 30px 0 30px;
+  }
+
+  li.active {
+    font-weight: bold;
+  }
+}
+
+home-lists {
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    @include row;
+    @include primary-font(24px, $primary-color, 700);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+
+#home-new-list {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 48px;
+  height: auto;
+}
