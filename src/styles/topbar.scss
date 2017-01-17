@@ -1,0 +1,44 @@
+@import 'neat';
+@import 'global';
+
+$topbar-height: 48px;
+$topbar-side-pad: 16px;
+
+topbar {
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+  height: $topbar-height;
+  background: white;
+  border-bottom: #F5F5F5 1px solid;
+  text-align: center;
+}
+
+@mixin topbar-base {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: $topbar-height;
+}
+
+topbar-content {
+  @include topbar-base;
+  img { height: 24px; }
+}
+
+topbar-center {
+  @include topbar-base;
+  @include secondary-font(24px, $primary-color, 700);
+}
+
+topbar-left {
+  @include topbar-base;
+  position: absolute;
+  left: $topbar-side-pad;
+}
+
+topbar-right {
+  @include topbar-base;
+  position: absolute;
+  right: $topbar-side-pad;
+}
