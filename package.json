@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "build": "webpack -p",
-    "http-server": "http-server ./build"
+    "http-server": "http-server ./build",
+    "dev-server": "webpack-dev-server"
   },
   "author": "",
   "license": "ISC",
@@ -27,9 +28,14 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "immutable": "^3.8.1",
     "mongoose": "^4.7.6",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-persist": "^4.0.1",
+    "redux-thunk": "^2.1.0",
     "uniloc": "^0.3.0"
   }
 }
