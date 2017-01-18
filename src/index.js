@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
+
 import "./styles/style";
 import store from './reducers/index';
 import * as navigation from './actions/navigation';
+import renderer from './actors/renderer';
+
 
 var onHashChange = () => {
   store.dispatch(navigation.complete())
@@ -12,26 +15,13 @@ var onHashChange = () => {
 window.addEventListener('hashchange', onHashChange, false);
 onHashChange();
 
-const APP_NODE = document.getElementById('app');
+const actors = [renderer]
 
-const App = (props) => {
-  let Component;
-  const location = props.navigation.get('location');
-  switch(location.name) {
-    case "root":
-      Component = <div>root</div>;
-      break;
-    default:
-      Component = <div>undefined</div>;
-      break;
+let acting = false;
+store.subscribe(() => {
+  if(!acting) {
+    acting = true;
+    for(let actor of actors) actor(store.getState(), store.dispatch)
+    acting = false;
   }
-
-  return Component;
-}
-
-const AppContainer = connect(state => state)(App)
-
-ReactDOM.render(
-  <Provider store={store}>
-    <AppContainer />
-  </Provider>, APP_NODE);
+})
