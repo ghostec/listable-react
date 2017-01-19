@@ -1,14 +1,15 @@
 import Immutable from 'immutable';
-import { REHYDRATE } from 'redux-persist/constants';
 
 const initialState = Immutable.fromJS({
-  rehydrated: false
+  token: null
 });
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case REHYDRATE:
-      return state.set('rehydrated', true);
+    case 'SESSION/SET_TOKEN':
+      return state.set('token', action.token);
+    case 'SESSION/DISCARD_TOKEN':
+      return state.set('token', null);
     default:
       return state;
   }

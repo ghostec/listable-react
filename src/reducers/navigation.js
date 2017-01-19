@@ -2,15 +2,13 @@ import Immutable from 'immutable'
 
 const initialState = Immutable.fromJS({
   location: null
-})
+});
 
-const navigation = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case 'NAVIGATION/COMPLETE':
-      return state.set('location', action.location)
+      return state.set('location', action.location);
     default:
-      return state
+      return state;
   }
-}
-
-export default navigation
+};

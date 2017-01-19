@@ -4,10 +4,12 @@ import {persistStore, autoRehydrate} from 'redux-persist';
 
 import navigation from './navigation';
 import storage from './storage';
+import session from './session';
 
 const rootReducer = combineReducers({
   navigation,
-  storage
+  storage,
+  session
 });
 
 const store = compose(applyMiddleware(thunk))(createStore)(rootReducer, undefined, autoRehydrate());
