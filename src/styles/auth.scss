@@ -1,0 +1,74 @@
+@import 'bourbon';
+@import 'global';
+
+$auth-header-height: 200px;
+
+auth-header {
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+  text-align: center;
+  height: $auth-header-height;
+  background: $color-blue;
+}
+
+auth-header-logo {
+  @include secondary-font(48px, white, 700);
+  margin-top: 48px;
+  display: block;
+}
+
+auth-header-description {
+  @include secondary-font(20px, white, 400);
+  display: block;
+}
+
+auth-form {
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+  margin-top: 15px;
+  text-align: center;
+}
+
+auth-form input {
+  @include secondary-font(20px, $color-black, 400);
+  @include calc(width, "100% - 40px");
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: 2px solid $color-light-gray;
+  padding: 0 10px 10px 10px;
+}
+
+auth-form input:focus {
+  outline: none;
+  border-color: $color-blue;
+}
+
+#auth-form-submit-ok {
+  width: 48px;
+  height: auto;
+}
+
+auth-footer {
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+  @include primary-font(20px);
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  text-align: center;
+}
+
+auth-footer-forgot {
+  color: $color-gray;
+  margin-right: 40px;
+}
+
+auth-footer-sign-up {
+  color: $color-black;
+}

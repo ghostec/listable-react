@@ -7,7 +7,7 @@
     "test": "mocha",
     "build": "webpack -p",
     "http-server": "http-server ./build",
-    "dev-server": "webpack-dev-server"
+    "dev-server": "webpack-dev-server --host 192.168.1.2"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "babel-loader": "^6.2.10",
     "babel-preset-env": "^1.1.8",
     "babel-preset-react": "^6.16.0",
+    "bourbon": "^4.2.7",
     "bourbon-neat": "^1.8.0",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",

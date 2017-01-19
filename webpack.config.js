@@ -1,7 +1,13 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const sassPaths = require("bourbon-neat").includePaths.map(
+const includePaths = [
+  require("bourbon-neat").includePaths,
+  require("bourbon").includePaths
+];
+
+
+const sassPaths = includePaths.map(
   (sassPath) => "includePaths[]=" + sassPath
 ).join("&");
 
