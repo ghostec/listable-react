@@ -51,6 +51,9 @@ auth-form input:focus {
 #auth-form-submit-ok {
   width: 48px;
   height: auto;
+  background: url($images-path + 'submit-ok.svg') no-repeat;
+  border: none;
+  cursor: pointer;
 }
 
 auth-footer {

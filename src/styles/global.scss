@@ -9,6 +9,8 @@ $color-black: #333333;
 
 $mobile: new-breakpoint(max-width 1000px 12);
 
+$images-path: '../../build/images/';
+
 @mixin primary-font($size: 14px, $color: $primary-color, $weight: 400) {
   font-family: 'Lora', serif;
   font-size: $size;
@@ -21,4 +23,8 @@ $mobile: new-breakpoint(max-width 1000px 12);
   font-size: $size;
   font-weight: $weight;
   color: $color;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
 }

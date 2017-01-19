@@ -1,11 +1,15 @@
 import React from 'react';
 
 export default (props) => {
+  const { email, password } = props.form;
+  const { handleChange, handleSubmit } = props;
   return (
     <auth-form>
-      <input type="text" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <img src="images/submit-ok.svg" id="auth-form-submit-ok" />
+      <form onSubmit={handleSubmit}>
+        <input id="email" type="text" placeholder="Email" value={email} onChange={handleChange} />
+        <input id="password" type="password" placeholder="Password" value={password} onChange={handleChange} />
+        <input id="auth-form-submit-ok" type="submit" value="" />
+      </form>
     </auth-form>
   );
 };
