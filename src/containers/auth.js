@@ -2,6 +2,7 @@ import React from 'react';
 import update from 'react-addons-update';
 import { connect } from 'react-redux';
 
+import RedirectTo from './redirect_to';
 import Header from '../components/auth/header';
 import Form from '../components/auth/form';
 import Footer from '../components/auth/footer';
@@ -36,6 +37,9 @@ class Auth extends React.Component {
   }
 
   render() {
+    const token = this.props.session.get('token');
+    if(token != undefined) return <RedirectTo location='home' />
+
     return (
       <auth>
         <Header />

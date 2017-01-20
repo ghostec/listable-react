@@ -1,6 +1,7 @@
 import {applyMiddleware, createStore, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import {persistStore, autoRehydrate} from 'redux-persist';
+import immutableTransform from 'redux-persist-transform-immutable';
 
 import navigation from './navigation';
 import storage from './storage';
@@ -15,6 +16,9 @@ const rootReducer = combineReducers({
 });
 
 const store = compose(applyMiddleware(thunk))(createStore)(rootReducer, undefined, autoRehydrate());
-persistStore(store, { blacklist: ['navigation'] }).purge();
+persistStore(store, {
+  blacklist: ['navigation'],
+  transforms: [immutableTransform()]
+});
 
 export default store;
