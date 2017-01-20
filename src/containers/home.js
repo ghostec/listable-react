@@ -8,6 +8,7 @@ import Lists from '../components/home/lists';
 import Form from '../components/home/form';
 import CreateListButton from '../components/home/create_list_button';
 import * as lists from '../actions/lists';
+import * as session from '../actions/session';
 
 class Home extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class Home extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleShow = this.toggleShow.bind(this);
+    this.signOut = this.signOut.bind(this);
   }
 
   handleChange(event) {
@@ -45,10 +47,14 @@ class Home extends React.Component {
     });
   }
 
+  signOut() {
+    this.props.dispatch(session.signOut());
+  }
+
   render() {
     return (
       <home>
-        <TopBar />
+        <TopBar signOut={this.signOut}/>
         <Filters />
         {this.state.show_form && <Form form={this.state.form} toggleShow={this.toggleShow} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
         <Lists lists={this.props.lists} />

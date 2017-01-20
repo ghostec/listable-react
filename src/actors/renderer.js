@@ -13,7 +13,12 @@ export default (state, dispatch) => {
   
   const App = (props) => {
     const location = props.state.navigation.get('location');
-    const route = RoutesComponents[location.name] || RoutesComponents.default;
+    const token = state.session.get('token', undefined);
+
+    let route = RoutesComponents[location.name] || RoutesComponents.default;
+    if(token == undefined && route.public != true) {
+      route = RoutesComponents.redirect('auth');
+    }
 
     return route.component;
   }

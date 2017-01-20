@@ -5,6 +5,7 @@ export default (props) => {
     <topbar>
       <topbar-content>
         <topbar-left>
+          <img src="images/more.svg" onClick={props.signOut} />
         </topbar-left>
         <topbar-center>
           Listable
