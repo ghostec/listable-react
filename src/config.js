@@ -1,3 +1,3 @@
 export default {
-  apiURL: '//192.168.1.2:3000/api'
+  apiURL: '//192.168.1.7:3000/api'
 };

@@ -31,7 +31,8 @@ module.exports = {
         include: APP_DIR,
         exclude: /node_modules/,
         query: {
-          presets: ['babel-preset-env', 'react']
+          presets: ['babel-preset-env', 'react'],
+          plugins: ['transform-object-rest-spread']
         },
         test: /\.js$/
       },
