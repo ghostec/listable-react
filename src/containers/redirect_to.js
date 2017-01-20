@@ -1,14 +1,14 @@
 import React from 'react';
 
+import redirect from '../helpers/redirect';
+
 class RedirectTo extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentWillMount() {
-    window.location.replace(
-      window.location.pathname + window.location.search + "#" + this.props.location
-    )
+    redirect(this.props.location);
   }
 
   render() {

@@ -2,22 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import update from 'react-addons-update';
 
-import TopBar from '../components/home/topbar';
-import Filters from '../components/home/filters';
-import Lists from '../components/home/lists';
-import Form from '../components/home/form';
+import TopBar from '../components/list/topbar';
+import Info from '../components/list/info';
 import CreateListButton from '../components/home/create_list_button';
 import * as lists from '../actions/lists';
 import * as session from '../actions/session';
-import redirect from '../helpers/redirect';
+import * as navigation from '../actions/navigation';
 
-class Home extends React.Component {
+class List extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       form: {
-        name: ''
+        url: ''
       },
       show_form: false
     };
@@ -25,8 +23,7 @@ class Home extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleShow = this.toggleShow.bind(this);
-    this.signOut = this.signOut.bind(this);
-    this.goToList = this.goToList.bind(this);
+    this.back = this.back.bind(this);
   }
 
   handleChange(event) {
@@ -49,25 +46,28 @@ class Home extends React.Component {
     });
   }
 
-  signOut() {
-    this.props.dispatch(session.signOut());
-  }
-
-  goToList(list) {
-    redirect(`list/${list._id}`);
+  back() {
+    this.props.dispatch(navigation.backBegin());
   }
 
   render() {
     return (
-      <home>
-        <TopBar signOut={this.signOut}/>
-        <Filters />
-        {this.state.show_form && <Form form={this.state.form} toggleShow={this.toggleShow} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
-        <Lists lists={this.props.lists} goToList={this.goToList} />
-        {!this.state.show_form && <CreateListButton toggleShow={this.toggleShow} />}
-      </home>
+      <list>
+        <TopBar back={this.back}/>
+        <Info list={this.props.list} />
+      </list>
     );
   }
 };
 
-export default connect(state => state)(Home);
+const mapStateToProps = state => {
+  const list_id = state.navigation.get('location').options.id;
+  const list = state.lists.get(list_id);
+
+  return {
+    list
+  };
+}
+
+export default connect(mapStateToProps)(List);
+

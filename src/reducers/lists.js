@@ -8,6 +8,8 @@ export default (state = initialState, action) => {
       return action.lists;
     case 'LISTS/CREATE':
       return state.set(action.list.get('_id'), action.list);
+    case 'LISTS/GET':
+      return state.set(action.list.get('_id'), action.list);
     default:
       return state;
   }

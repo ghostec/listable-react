@@ -1,0 +1,29 @@
+@import 'global';
+
+list-topbar-save {
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+#list-topbar-save-ring {
+  height: 20px;
+  width: auto;
+  margin-right: 5px;
+}
+
+list-topbar-text {
+  @include secondary-font(20px, $color-gray);
+}
+
+list-info {
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+  margin-top: 20px;
+  text-align: center;
+}
+
+list-info-name {
+  @include primary-font(24px, $color-black, 700);
+}

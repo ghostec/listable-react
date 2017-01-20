@@ -6,7 +6,8 @@ export default (props) => {
   const lists = props.lists.sort((a, b) => {
     return (a.get('last_seen_at') < b.get('last_seen_at') ? 1 : -1)
   }).entrySeq().map(([k, v]) => {
-    return <li key={k}>{v.get('name')}</li>;
+    const list = v.toJS();
+    return <li key={k} onClick={() => props.goToList(list)}>{list.name}</li>;
   });
 
   return (

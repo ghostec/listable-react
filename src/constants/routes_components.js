@@ -2,8 +2,9 @@ import React from 'react';
 
 import Root from '../containers/root';
 import Auth from '../containers/auth';
-import Home from '../containers/home';
 import RedirectTo from '../containers/redirect_to';
+import Home from '../containers/home';
+import List from '../containers/list';
 
 const RoutesComponents = {
   root: {
@@ -22,6 +23,9 @@ const RoutesComponents = {
   },
   home: {
     component: <Home />
+  },
+  list: {
+    component: <List />
   },
   default: {
     component: <div>default</div>

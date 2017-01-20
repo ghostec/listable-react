@@ -11,4 +11,7 @@ export default (state, dispatch) => {
   if(location.name == 'home') {
     dispatch(lists.index());
   }
+  else if(location.name == 'list') {
+    dispatch(lists.get(location.options));
+  }
 }
