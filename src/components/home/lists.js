@@ -1,12 +1,12 @@
 import React from 'react';
 
 export default (props) => {
+  if(props.lists == undefined) return <div>loading...</div> 
+
   return (
     <home-lists>
       <ul>
-        <li>Machine Learning</li>
-        <li>Guitar Advaned</li>
-        <li>UX</li>
+        {props.lists.entrySeq().map(([k, v]) => <li key={k}>{v.get('name')}</li>)}
       </ul>
     </home-lists>
   );

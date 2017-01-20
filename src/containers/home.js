@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import TopBar from '../components/home/topbar';
 import Filters from '../components/home/filters';
@@ -49,11 +50,11 @@ class Home extends React.Component {
         <TopBar />
         <Filters />
         {this.state.show_form && <Form toggleShow={this.toggleShow}/>}
-        <Lists />
+        <Lists lists={this.props.lists} />
         {!this.state.show_form && <CreateListButton toggleShow={this.toggleShow} />}
       </home>
     );
   }
 };
 
-export default Home;
+export default connect(state => state)(Home);

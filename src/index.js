@@ -9,6 +9,7 @@ import "./styles/style";
 import store from './reducers/index';
 import * as navigation from './actions/navigation';
 import renderer from './actors/renderer';
+import fetcher from './actors/fetcher';
 
 
 var onHashChange = () => {
@@ -18,7 +19,7 @@ var onHashChange = () => {
 window.addEventListener('hashchange', onHashChange, false);
 onHashChange();
 
-const actors = [renderer]
+const actors = [fetcher, renderer]
 
 let acting = false;
 store.subscribe(() => {

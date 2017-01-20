@@ -5,11 +5,13 @@ import {persistStore, autoRehydrate} from 'redux-persist';
 import navigation from './navigation';
 import storage from './storage';
 import session from './session';
+import lists from './lists';
 
 const rootReducer = combineReducers({
   navigation,
   storage,
-  session
+  session,
+  lists
 });
 
 const store = compose(applyMiddleware(thunk))(createStore)(rootReducer, undefined, autoRehydrate());
