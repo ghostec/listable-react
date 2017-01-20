@@ -22,7 +22,7 @@ export const create = (name) => {
       }
       return response.json();
     })
-    .then(list => dispatch({ type: 'LISTS/CREATE', list }));
+    .then(list => dispatch({ type: 'LISTS/CREATE', list: Immutable.fromJS(list) }));
   }
 };
 

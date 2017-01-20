@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import update from 'react-addons-update';
 
 import TopBar from '../components/home/topbar';
 import Filters from '../components/home/filters';
@@ -49,7 +50,7 @@ class Home extends React.Component {
       <home>
         <TopBar />
         <Filters />
-        {this.state.show_form && <Form toggleShow={this.toggleShow}/>}
+        {this.state.show_form && <Form form={this.state.form} toggleShow={this.toggleShow} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
         <Lists lists={this.props.lists} />
         {!this.state.show_form && <CreateListButton toggleShow={this.toggleShow} />}
       </home>
