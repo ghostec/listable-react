@@ -39,13 +39,9 @@ const Item = props => {
 export default props => {
   if(_.isEmpty(props.list_items)) return <div>loading...</div>;
 
-  const sorted = _.map(props.list_items, v => v).sort((a, b) => {
-    return (a.updated_at < b.updated_at ? 1 : -1)
-  });
-
   return (
     <list-items>
-      <ul>{sorted.map((v, k) => <Item key={k} item={v} toggleDone={props.toggleDone} />)}</ul>
+      <ul>{props.list_items.map((v, k) => <Item key={k} item={v} toggleDone={props.toggleDone} />)}</ul>
     </list-items>
   );
 };

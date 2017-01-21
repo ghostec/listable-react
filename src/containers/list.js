@@ -9,6 +9,7 @@ import Form from '../components/list/form';
 import AddButton from '../components/common/add_button';
 import * as list_items from '../actions/list_items';
 import * as navigation from '../actions/navigation';
+import _ from 'lodash';
 
 class List extends React.Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class List extends React.Component {
   render() {
     return (
       <list>
-        <TopBar back={this.back}/>
+        <TopBar back={this.back} n_items={this.props.list_items.length} />
         <Info list={this.props.list} />
         {this.state.show_form && <Form form={this.state.form} toggleShow={this.toggleShow} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
         <Items list_items={this.props.list_items} toggleDone={this.toggleListItemDone} />
@@ -72,10 +73,15 @@ class List extends React.Component {
 const mapStateToProps = state => {
   const list_id = state.navigation.get('location').options.id;
   const list = state.lists.get(list_id).toJS();
+  
+  const list_items = state.list_items.toJS();
+  const sorted = _.map(list_items, v => v).sort((a, b) => {
+    return (a.updated_at < b.updated_at ? 1 : -1)
+  });
 
   return {
     list,
-    list_items: state.list_items.toJS()
+    list_items: sorted
   };
 }
 

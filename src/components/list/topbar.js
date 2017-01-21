@@ -1,6 +1,8 @@
 import React from 'react';
 
 export default (props) => {
+  const { n_items } = props;
+
   return (
     <topbar>
       <topbar-content>
@@ -14,7 +16,7 @@ export default (props) => {
           </list-topbar-save>
         </topbar-center>
         <topbar-right>
-          <list-topbar-text>16 items</list-topbar-text>
+        {n_items != undefined && n_items > 0 && <list-topbar-text>{n_items} {n_items == 1 ? 'item' : 'items'}</list-topbar-text>}
         </topbar-right>
       </topbar-content>
     </topbar>
