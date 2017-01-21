@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import update from 'react-addons-update';
 
+import '../styles/list';
+
 import TopBar from '../components/list/topbar';
 import Info from '../components/list/info';
 import Items from '../components/list/items';

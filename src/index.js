@@ -5,7 +5,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 
-import "./styles/style";
 import store from './reducers/index';
 import * as navigation from './actions/navigation';
 import renderer from './actors/renderer';

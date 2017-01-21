@@ -2,6 +2,8 @@ import React from 'react';
 import update from 'react-addons-update';
 import { connect } from 'react-redux';
 
+import "../styles/auth";
+
 import RedirectTo from './redirect_to';
 import Header from '../components/auth/header';
 import Form from '../components/auth/form';
