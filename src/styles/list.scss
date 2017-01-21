@@ -27,3 +27,27 @@ list-info {
 list-info-name {
   @include primary-font(24px, $color-black, 700);
 }
+
+list-items {
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+  margin-top: 20px;
+}
+
+list-items ul {
+  @include row();
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+list-items ul li {
+  @include calc(width, "100% - 20px");
+  @include secondary-font(18px, $color-gray, 400);
+  border-bottom: 1px solid $color-light-gray;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px 20px 10px;
+}

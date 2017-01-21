@@ -4,6 +4,7 @@ import update from 'react-addons-update';
 
 import TopBar from '../components/list/topbar';
 import Info from '../components/list/info';
+import Items from '../components/list/items';
 import CreateListButton from '../components/home/create_list_button';
 import * as lists from '../actions/lists';
 import * as session from '../actions/session';
@@ -55,6 +56,7 @@ class List extends React.Component {
       <list>
         <TopBar back={this.back}/>
         <Info list={this.props.list} />
+        <Items list_items={this.props.list_items} />
       </list>
     );
   }
@@ -65,7 +67,8 @@ const mapStateToProps = state => {
   const list = state.lists.get(list_id);
 
   return {
-    list
+    list,
+    list_items: state.list_items
   };
 }
 
