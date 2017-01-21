@@ -1,10 +1,10 @@
 const dev = {
-  apiURL: '//192.168.1.6:3000/api'
+  apiURL: '//192.168.1.6:3000/api',
   apiVersion: 'v1'
 };
 
 const prd = {
-  apiURL: `${process.env.apiURL}/api`
+  apiURL: `${process.env.apiURL}/api`,
   apiVersion: 'v1',
 };
 
