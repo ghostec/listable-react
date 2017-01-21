@@ -31,7 +31,7 @@ auth-form {
   text-align: center;
 }
 
-auth-form input {
+auth-form input[type=text], auth-form input[type=password] {
   @include secondary-font(20px, $color-black, 400);
   @include calc(width, "100% - 40px");
   display: block;
@@ -50,8 +50,9 @@ auth-form input:focus {
 
 #auth-form-submit-ok {
   width: 48px;
-  height: auto;
-  background: url($images-path + 'submit-ok.svg') no-repeat;
+  height: 48px;
+  @include background(url($images-path + 'submit-ok.svg') no-repeat);
+  background-size: 48px 48px;
   border: none;
   cursor: pointer;
 }
