@@ -13,7 +13,7 @@ export default (state, dispatch) => {
     dispatch(lists.index());
   }
   else if(location.name == 'list') {
-    dispatch(lists.get(location.options));
-    dispatch(list_items.index(location.options.id));
+    const list_id = location.options.id;
+    dispatch(list_items.fromList(list_id));
   }
 };

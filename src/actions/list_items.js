@@ -6,7 +6,7 @@ export const create = (list_id, url) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${config.apiURL}/list_item`, {
+    return fetch(`${config.apiURL}/list_items`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -27,11 +27,11 @@ export const create = (list_id, url) => {
   }
 };
 
-export const index = (list_id) => {
+export const fromList = (list_id) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${config.apiURL}/list_item/${list_id}`, {
+    return fetch(`${config.apiURL}/lists/${list_id}/list_items`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -53,7 +53,9 @@ export const index = (list_id) => {
       const state_list_items = getState().list_items;
 
       if(!normalized.equals(state_list_items)) {
-        dispatch({ type: 'LIST_ITEMS/INDEX', list_items: normalized });
+        dispatch({
+          type: 'LIST_ITEMS/FROM_LIST', list_items: normalized
+        });
       }
     }); 
   }

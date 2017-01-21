@@ -2,7 +2,7 @@ import config from '../config';
 
 export const signIn = (email, password) => {
   return (dispatch) => {
-    return fetch(`${config.apiURL}/authenticate`, {
+    return fetch(`${config.apiURL}/users/authenticate`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

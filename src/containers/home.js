@@ -6,7 +6,7 @@ import TopBar from '../components/home/topbar';
 import Filters from '../components/home/filters';
 import Lists from '../components/home/lists';
 import Form from '../components/home/form';
-import CreateListButton from '../components/home/create_list_button';
+import AddButton from '../components/common/add_button';
 import * as lists from '../actions/lists';
 import * as session from '../actions/session';
 import redirect from '../helpers/redirect';
@@ -64,7 +64,7 @@ class Home extends React.Component {
         <Filters />
         {this.state.show_form && <Form form={this.state.form} toggleShow={this.toggleShow} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
         <Lists lists={this.props.lists} goToList={this.goToList} />
-        {!this.state.show_form && <CreateListButton toggleShow={this.toggleShow} />}
+        {!this.state.show_form && <AddButton toggleShow={this.toggleShow} />}
       </home>
     );
   }

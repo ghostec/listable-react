@@ -1,0 +1,56 @@
+@import 'bourbon';
+@import 'global';
+
+quick-add-form {
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+  position: relative;
+}
+
+quick-add-form form {
+  @include calc(width, "100% - 40px");
+  display: block;
+  padding: 0;
+  margin: 0 auto 15px auto;
+}
+
+quick-add-form input[type=text] {
+  @include secondary-font(20px, $color-black, 400);
+  width: 100%; 
+  display: block;
+  border: none;
+  border-bottom: 2px solid $color-light-gray;
+  padding: 0 (10px + 24px + 5px + 24px + 10px) 10px 10px;
+}
+
+quick-add-form input[type=text]:focus {
+  outline: none;
+  border-color: $color-blue;
+}
+
+#quick-add-form-submit {
+  width: 24px;
+  height: 24px;
+  @include background(url($images-path + 'add-blue.svg') no-repeat center);
+  background-size: 24px 24px;
+  display: block;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 30px;
+}
+
+quick-add-form-close {
+  width: 24px;
+  height: 24px;
+  @include background(url($images-path + 'close-blue.svg') no-repeat center);
+  background-size: 24px 24px;
+  display: block;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 30px + 24px + 5px;
+}

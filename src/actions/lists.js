@@ -6,7 +6,7 @@ export const create = (name) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${config.apiURL}/list`, {
+    return fetch(`${config.apiURL}/lists`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -30,7 +30,7 @@ export const index = () => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${config.apiURL}/list`, {
+    return fetch(`${config.apiURL}/lists`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -62,7 +62,7 @@ export const get = ({ id }) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${config.apiURL}/list/${id}`, {
+    return fetch(`${config.apiURL}/lists/${id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

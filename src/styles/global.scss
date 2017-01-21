@@ -28,3 +28,13 @@ $images-path: '../../build/images/';
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
+
+#add-button {
+  z-index: 999;
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 48px;
+  height: auto;
+  cursor: pointer;
+}
