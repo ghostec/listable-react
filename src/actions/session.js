@@ -1,8 +1,8 @@
-import config from '../config';
+import { apiPath } from '../helpers/common';
 
 export const signIn = (email, password) => {
   return (dispatch) => {
-    return fetch(`${config.apiURL}/users/authenticate`, {
+    return fetch(`${apiPath}/users/authenticate`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

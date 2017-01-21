@@ -1,12 +1,12 @@
 import Immutable from 'immutable';
 
-import config from '../config';
+import { apiPath } from '../helpers/common';
 
 export const create = (name) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${config.apiURL}/lists`, {
+    return fetch(`${apiPath}/lists`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -30,7 +30,7 @@ export const index = () => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${config.apiURL}/lists`, {
+    return fetch(`${apiPath}/lists`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -62,7 +62,7 @@ export const get = ({ id }) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${config.apiURL}/lists/${id}`, {
+    return fetch(`${apiPath}/lists/${id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
