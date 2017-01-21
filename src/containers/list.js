@@ -25,6 +25,7 @@ class List extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleShow = this.toggleShow.bind(this);
     this.back = this.back.bind(this);
+    this.toggleListItemDone = this.toggleListItemDone.bind(this);
   }
 
   handleChange(event) {
@@ -51,13 +52,17 @@ class List extends React.Component {
     this.props.dispatch(navigation.backBegin());
   }
 
+  toggleListItemDone(list_item) {
+    this.props.dispatch(list_items.toggleDone(list_item));
+  }
+
   render() {
     return (
       <list>
         <TopBar back={this.back}/>
         <Info list={this.props.list} />
         {this.state.show_form && <Form form={this.state.form} toggleShow={this.toggleShow} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
-        <Items list_items={this.props.list_items} />
+        <Items list_items={this.props.list_items} toggleDone={this.toggleListItemDone} />
         {!this.state.show_form && <AddButton toggleShow={this.toggleShow} />}
       </list>
     );

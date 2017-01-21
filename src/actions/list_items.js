@@ -24,7 +24,7 @@ export const create = (list_id, url) => {
       return response.json();
     })
     .then(list_item => dispatch({ type: 'LIST_ITEMS/CREATE', list_item: Immutable.fromJS(list_item) }));
-  }
+  };
 };
 
 export const fromList = (list_id) => {
@@ -58,5 +58,36 @@ export const fromList = (list_id) => {
         });
       }
     }); 
-  }
+  };
+};
+
+export const toggleDone = (list_item) => {
+  return (dispatch, getState) => {
+    const token = getState().session.get('token');
+
+    return fetch(`${config.apiURL}/list_items/${list_item._id}`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      },
+      body: JSON.stringify({
+        done: !list_item.done
+      })
+    }).then(response => {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+
+      const patched_list_item = Immutable.fromJS({
+        ...list_item,
+        done: !list_item.done
+      });
+
+      dispatch({
+        type: 'LIST_ITEMS/TOGGLE_DONE', list_item: patched_list_item
+      }); 
+    });
+  };
 };
