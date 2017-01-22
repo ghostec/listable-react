@@ -61,7 +61,7 @@ auth-footer {
     @include span-columns(12);
   }
   @include primary-font(20px);
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   left: 0;
   text-align: center;

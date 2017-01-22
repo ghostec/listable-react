@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../../styles/topbar';
+
 export default (props) => {
   const { n_items } = props;
 
