@@ -37,5 +37,9 @@ home-lists {
     @include primary-font(24px, $primary-color, 700);
     margin-bottom: 20px;
     text-align: center;
+
+    &:last-child {
+      margin-bottom: 20px + 20px + 48px;
+    }
   }
 }

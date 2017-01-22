@@ -48,7 +48,10 @@ list-items ul li {
   margin: 0 auto 20px auto;
   padding: 0 10px 20px 10px;
 
-  &:last-child { border: none; }
+  &:last-child {
+    border: none;
+    margin-bottom: 20px + 48px;
+  }
 }
 
 list-items ul li list-item-name {

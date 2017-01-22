@@ -9,6 +9,7 @@ import Info from '../components/list/info';
 import Items from '../components/list/items';
 import Form from '../components/list/form';
 import AddButton from '../components/common/add_button';
+import Options from '../components/list/options';
 import * as list_items from '../actions/list_items';
 import * as navigation from '../actions/navigation';
 import _ from 'lodash';
@@ -21,7 +22,9 @@ class List extends React.Component {
       form: {
         url: ''
       },
-      show_form: false
+      show_form: false,
+      show_options: false,
+      options_item: null
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -29,6 +32,8 @@ class List extends React.Component {
     this.toggleShow = this.toggleShow.bind(this);
     this.back = this.back.bind(this);
     this.toggleListItemDone = this.toggleListItemDone.bind(this);
+    this.toggleOptions = this.toggleOptions.bind(this);
+    this.goToURL = this.goToURL.bind(this);
   }
 
   handleChange(event) {
@@ -55,19 +60,36 @@ class List extends React.Component {
     this.props.dispatch(navigation.backBegin());
   }
 
-  toggleListItemDone(list_item) {
+  toggleListItemDone(event, list_item) {
     this.props.dispatch(list_items.toggleDone(list_item));
+    event.stopPropagation();
+  }
+  
+  toggleOptions(event, item) {
+    this.setState({
+      ...this.state,
+      show_options: !this.state.show_options,
+      options_item: item
+    });
+  }
+
+  goToURL(event, item) {
+    window.open(item.url);
+    event.stopPropagation();
   }
 
   render() {
     return (
+      <div>
+      {this.state.show_options && <Options item={this.state.options_item} toggleOptions={this.toggleOptions} goToURL={this.goToURL} />}
       <list>
         <TopBar back={this.back} n_items={this.props.list_items.length} />
         <Info list={this.props.list} />
         {this.state.show_form && <Form form={this.state.form} toggleShow={this.toggleShow} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
-        <Items list_items={this.props.list_items} toggleDone={this.toggleListItemDone} />
+        <Items list_items={this.props.list_items} toggleDone={this.toggleListItemDone} toggleOptions={this.toggleOptions}/>
         {!this.state.show_form && <AddButton toggleShow={this.toggleShow} />}
       </list>
+      </div>
     );
   }
 };
@@ -88,4 +110,3 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(List);
-
