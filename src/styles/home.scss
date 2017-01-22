@@ -2,11 +2,10 @@
 @import 'quick_add_form';
 
 home-filters {
-  @include media($mobile) {
-    @include span-columns(12);
-  }
+  width: 100%;
   margin-top: 10px;
   margin-bottom: 30px;
+  display: block;
   @include secondary-font(16px, $secondary-color);
 
   ul {
