@@ -39,14 +39,21 @@ $images-path: '../../build/images/';
   }
 }
 
-body {
+html, body {
   background: white;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+#app {
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #add-button {
