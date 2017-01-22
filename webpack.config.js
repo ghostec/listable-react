@@ -1,5 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 
 const includePaths = [
   require("bourbon-neat").includePaths,
@@ -55,6 +56,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('style.css')
+    new ExtractTextPlugin('style.css'),
+    new webpack.EnvironmentPlugin([
+      "ENV", "apiURL"
+    ])
   ]
 };

@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "build": "webpack -p",
+    "build": "ENV=prd apiURL=https://listable-express.herokuapp.com webpack -p",
     "http-server": "http-server ./build",
-    "dev-server": "webpack-dev-server --host 192.168.1.6",
+    "dev-server": "ENV=dev webpack-dev-server --host 192.168.1.6",
     "start": "node server.js"
   },
   "author": "",
