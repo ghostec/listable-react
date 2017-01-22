@@ -4,25 +4,21 @@ $topbar-height: 48px;
 $topbar-side-pad: 16px;
 
 topbar-wrap {
-  @include media($mobile) {
-    @include span-columns(12);
-  }
+  width: 100%;
   height: $topbar-height;
   display: block;
   text-align: center;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  z-index: 999;
 }
 
 topbar {
-  @include media($mobile) {
-    @include span-columns(12);
-  }
+  width: 100%;
   height: $topbar-height;
   background: white;
-  @include box-shadow(0px, 0, 3px, $color-gray);
+  position: relative;
+  display: block;
 }
 
 @mixin topbar-base {
@@ -34,6 +30,13 @@ topbar {
 
 topbar-content {
   @include topbar-base;
+  @include box-shadow(0px, 0, 3px, $color-gray);
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+
   img { height: 24px; }
 }
 
