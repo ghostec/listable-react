@@ -64,4 +64,5 @@ input:-webkit-autofill {
   width: 48px;
   height: auto;
   cursor: pointer;
+  @include filter(drop-shadow(1px 3px 6px rgba(0, 0, 0, 0.5)));
 }
