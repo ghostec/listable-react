@@ -73,13 +73,20 @@ auth-footer {
   width: 100%;
   height: 24px;
   margin-bottom: 20px;
+
+  > * {
+    margin-right: 40px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
 auth-footer-forgot {
   color: $color-gray;
-  margin-right: 40px;
 }
 
-auth-footer-sign-up {
+auth-footer-sign-in-up {
   color: $color-black;
 }
