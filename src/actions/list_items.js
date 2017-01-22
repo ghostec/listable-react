@@ -91,3 +91,26 @@ export const toggleDone = (list_item) => {
     });
   };
 };
+
+export const remove = (list_item) => {
+  return (dispatch, getState) => {
+    const token = getState().session.get('token');
+
+    return fetch(`${apiPath}/list_items/${list_item._id}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      }
+    }).then(response => {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+
+      dispatch({
+        type: 'LIST_ITEMS/DELETE', list_item
+      }); 
+    });
+  };
+};

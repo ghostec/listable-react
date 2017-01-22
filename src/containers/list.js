@@ -34,6 +34,7 @@ class List extends React.Component {
     this.toggleListItemDone = this.toggleListItemDone.bind(this);
     this.toggleOptions = this.toggleOptions.bind(this);
     this.goToURL = this.goToURL.bind(this);
+    this.removeItem = this.removeItem.bind(this);
   }
 
   handleChange(event) {
@@ -78,10 +79,16 @@ class List extends React.Component {
     event.stopPropagation();
   }
 
+  removeItem(event, item) {
+    this.props.dispatch(list_items.remove(item));
+    this.toggleOptions(event, null);
+    event.stopPropagation();
+  }
+
   render() {
     return (
       <div>
-      {this.state.show_options && <Options item={this.state.options_item} toggleOptions={this.toggleOptions} goToURL={this.goToURL} />}
+      {this.state.show_options && <Options item={this.state.options_item} toggleOptions={this.toggleOptions} goToURL={this.goToURL} removeItem={this.removeItem} />}
       <list>
         <TopBar back={this.back} n_items={this.props.list_items.length} />
         <Info list={this.props.list} />
