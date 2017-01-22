@@ -44,10 +44,9 @@ class Auth extends React.Component {
 
     return (
       <auth>
-      <auth-wrap>
-        <Header />
-        <Form form={this.state.form} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
-        <push />
+        <auth-wrap>
+          <Header />
+          <Form form={this.state.form} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
         </auth-wrap>
         <Footer />
       </auth>
