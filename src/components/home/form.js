@@ -7,7 +7,7 @@ export default (props) => {
   return (
     <quick-add-form>
       <form onSubmit={handleSubmit}>
-        <input id="name" type="text" placeholder="paste URL" value={name} onChange={handleChange} />
+        <input id="name" type="text" placeholder="New list name" autoComplete="off" value={name} onChange={handleChange} />
         <quick-add-form-close onClick={toggleShow}/>
         <input id="quick-add-form-submit" type="submit" value="" />
       </form>
