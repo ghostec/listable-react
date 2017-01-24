@@ -49,7 +49,7 @@ class List extends React.Component {
       <div>
         {show_options && <Options item={options_item} toggleOptions={toggleOptions} />}
         <list>
-          <TopBar back={back} n_items={list_items.length} />
+          <TopBar n_items={list_items.length} />
           <Info list={list} />
           {show_form && <Form list={list} toggleForm={toggleForm} />}
           <Items list_items={list_items} toggleOptions={toggleOptions}/>

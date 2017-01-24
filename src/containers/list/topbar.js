@@ -16,9 +16,10 @@ class TopBarContainer extends React.Component {
   }
 
   render() {
+    const { n_items } = this.props;
     const { back } = this;
 
-    return <TopBar back={back} />
+    return <TopBar back={back} n_items={n_items} />
   }
 };
 
