@@ -10,6 +10,8 @@ export default (state = initialState, action) => {
       return state.set(action.list.get('_id'), action.list);
     case 'LISTS/GET':
       return state.set(action.list.get('_id'), action.list);
+    case 'LISTS/TOGGLE_PUBLIC':
+      return state.set(action.list.get('_id'), action.list);
     default:
       return state;
   }

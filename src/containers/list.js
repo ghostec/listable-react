@@ -40,13 +40,13 @@ class List extends React.Component {
   render() {
     const { toggleForm, toggleOptions } = this;
     const { show_form, options_component } = this.state;
-    const { list, list_items } = this.props;
+    const { list, list_items, dispatch } = this.props;
     
     return (
       <list>
         {options_component}
         <TopBar n_items={list_items.length} />
-        <Info list={list} />
+        <Info list={list} toggleOptions={toggleOptions} dispatch={dispatch} />
         {show_form && <Form list={list} toggleForm={toggleForm} />}
         <Items list_items={list_items} toggleOptions={toggleOptions}/>
         {!show_form && <AddButton toggleForm={toggleForm} />}
