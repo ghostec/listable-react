@@ -60,16 +60,30 @@ class Home extends React.Component {
   }
 
   render() {
+    const { lists } = this.props;
+    const { show_form, form } = this.state;
+    const { signOut, toggleShow, handleChange, handleSubmit, goToList } = this;
+
     return (
       <home>
-        <TopBar signOut={this.signOut}/>
+        <TopBar signOut={signOut}/>
         <Filters />
-        {this.state.show_form && <Form form={this.state.form} toggleShow={this.toggleShow} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
-        <Lists lists={this.props.lists} goToList={this.goToList} />
-        {!this.state.show_form && <AddButton toggleShow={this.toggleShow} />}
+        {show_form && <Form form={form} toggleShow={toggleShow} handleChange={handleChange} handleSubmit={handleSubmit} />}
+        <Lists lists={lists} goToList={goToList} />
+        {!show_form && <AddButton toggleShow={toggleShow} />}
       </home>
     );
   }
 };
 
-export default connect(state => state)(Home);
+const mapStateToProps = state => {
+  const sorted_lists = _.map(state.lists.toJS(), v => v).sort((a, b) => {
+    return (a.last_seen_at < b.last_seen_at ? 1 : -1)
+  });
+
+  return {
+    lists: sorted_lists
+  };
+}
+
+export default connect(mapStateToProps)(Home);

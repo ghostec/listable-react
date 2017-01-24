@@ -1,69 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import update from 'react-addons-update';
+import _ from 'lodash';
 
 import '../styles/list';
 
-import TopBar from '../components/list/topbar';
+import Items from './list/items';
+import Form from './list/form';
+import TopBar from './list/topbar';
 import Info from '../components/list/info';
-import Items from '../components/list/items';
-import Form from '../components/list/form';
 import AddButton from '../components/common/add_button';
-import Options from '../components/list/options';
-import * as list_items from '../actions/list_items';
-import * as navigation from '../actions/navigation';
-import _ from 'lodash';
+import Options from './list/options';
 
 class List extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      form: {
-        url: ''
-      },
       show_form: false,
       show_options: false,
       options_item: null
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.toggleShow = this.toggleShow.bind(this);
-    this.back = this.back.bind(this);
-    this.toggleListItemDone = this.toggleListItemDone.bind(this);
+    this.toggleForm = this.toggleForm.bind(this);
     this.toggleOptions = this.toggleOptions.bind(this);
-    this.goToURL = this.goToURL.bind(this);
-    this.removeItem = this.removeItem.bind(this);
   }
 
-  handleChange(event) {
-    var newState = update(this.state, {
-      form: { [event.target.id]: {$set: event.target.value} }
-    });
-    this.setState(newState);
-  }
-
-  handleSubmit(event) {
-    const { url } = this.state.form;
-    this.props.dispatch(list_items.create(this.props.list._id, url));
-    event.preventDefault();
-  }
-
-  toggleShow() {
+  toggleForm() {
     this.setState({
       ...this.state,
       show_form: !this.state.show_form
     });
-  }
-
-  back() {
-    this.props.dispatch(navigation.backBegin());
-  }
-
-  toggleListItemDone(event, list_item) {
-    this.props.dispatch(list_items.toggleDone(list_item));
-    event.stopPropagation();
   }
   
   toggleOptions(event, item) {
@@ -73,29 +39,22 @@ class List extends React.Component {
       options_item: item
     });
   }
-
-  goToURL(event, item) {
-    window.open(item.url);
-    event.stopPropagation();
-  }
-
-  removeItem(event, item) {
-    this.props.dispatch(list_items.remove(item));
-    this.toggleOptions(event, null);
-    event.stopPropagation();
-  }
-
+  
   render() {
+    const { toggleForm, toggleOptions } = this;
+    const { options_item, show_form, show_options } = this.state;
+    const { list, list_items } = this.props;
+
     return (
       <div>
-      {this.state.show_options && <Options item={this.state.options_item} toggleOptions={this.toggleOptions} goToURL={this.goToURL} removeItem={this.removeItem} />}
-      <list>
-        <TopBar back={this.back} n_items={this.props.list_items.length} />
-        <Info list={this.props.list} />
-        {this.state.show_form && <Form form={this.state.form} toggleShow={this.toggleShow} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
-        <Items list_items={this.props.list_items} toggleDone={this.toggleListItemDone} toggleOptions={this.toggleOptions}/>
-        {!this.state.show_form && <AddButton toggleShow={this.toggleShow} />}
-      </list>
+        {show_options && <Options item={options_item} toggleOptions={toggleOptions} />}
+        <list>
+          <TopBar back={back} n_items={list_items.length} />
+          <Info list={list} />
+          {show_form && <Form list={list} toggleForm={toggleForm} />}
+          <Items list_items={list_items} toggleOptions={toggleOptions}/>
+          {!show_form && <AddButton toggleForm={toggleForm} />}
+        </list>
       </div>
     );
   }

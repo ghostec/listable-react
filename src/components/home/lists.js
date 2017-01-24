@@ -1,20 +1,29 @@
 import React from 'react';
+import _ from 'lodash';
 
-export default (props) => {
-  if(props.lists.isEmpty()) return <div>loading...</div>;
+const List = props => {
+  const { goToList, list } = props;
 
-  const lists = props.lists.sort((a, b) => {
-    return (a.get('last_seen_at') < b.get('last_seen_at') ? 1 : -1)
-  }).entrySeq().map(([k, v]) => {
-    const list = v.toJS();
-    return <li key={k} onClick={() => props.goToList(list)}>{list.name}</li>;
+  return (
+    <li onClick={() => goToList(list)}>
+      {list.name}
+      {!list.public && <img src="images/padlock.svg" />}
+    </li>
+  );
+}
+
+export default props => {
+  const { lists, goToList } = props;
+
+  if(_.isEmpty(lists)) return <div>loading...</div>;
+
+  const lists_lis = lists.map((list, k) => {
+    return <List key={k} list={list} goToList={goToList} />;
   });
 
   return (
     <home-lists>
-      <ul>
-      {lists}
-      </ul>
+      {lists_lis}
     </home-lists>
   );
 }
