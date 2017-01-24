@@ -10,8 +10,10 @@ export default (state = initialState, action) => {
       return state.set(action.list.get('_id'), action.list);
     case 'LISTS/GET':
       return state.set(action.list.get('_id'), action.list);
-    case 'LISTS/TOGGLE_PUBLIC':
+    case 'LISTS/PATCH':
       return state.set(action.list.get('_id'), action.list);
+    case 'LISTS/DELETE':
+      return state.delete(action.list.get('_id'));
     default:
       return state;
   }

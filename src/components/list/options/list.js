@@ -6,7 +6,9 @@ import * as lists from '../../../actions/lists';
 
 const togglePublic = (event, toggleOptions, dispatch, list) => {
   toggleOptions();
-  dispatch(lists.togglePublic(list));
+  dispatch(lists.patch(list, {
+    public: !list.public
+  }));
   event.stopPropagation();
 }
 

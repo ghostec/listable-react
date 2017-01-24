@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 
+import * as common from './common';
 import { apiPath } from '../helpers/common';
 
 export const create = (list_id, url) => {
@@ -61,56 +62,10 @@ export const fromList = (list_id) => {
   };
 };
 
-export const toggleDone = (list_item) => {
-  return (dispatch, getState) => {
-    const token = getState().session.get('token');
-
-    return fetch(`${apiPath}/list_items/${list_item._id}`, {
-      method: 'PATCH',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'x-access-token': token
-      },
-      body: JSON.stringify({
-        done: !list_item.done
-      })
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-
-      const patched_list_item = Immutable.fromJS({
-        ...list_item,
-        done: !list_item.done
-      });
-
-      dispatch({
-        type: 'LIST_ITEMS/TOGGLE_DONE', list_item: patched_list_item
-      }); 
-    });
-  };
+export const patch = (list_item, changes) => {
+  return common.patch(list_item, changes, 'list_item', 'list_items');
 };
 
 export const remove = (list_item) => {
-  return (dispatch, getState) => {
-    const token = getState().session.get('token');
-
-    return fetch(`${apiPath}/list_items/${list_item._id}`, {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'x-access-token': token
-      }
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-
-      dispatch({
-        type: 'LIST_ITEMS/DELETE', list_item
-      }); 
-    });
-  };
+  return common.remove(list_item, 'list_item', 'list_items');
 };

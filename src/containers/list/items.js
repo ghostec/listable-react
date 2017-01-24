@@ -12,7 +12,9 @@ class ItemsContainer extends React.Component {
   }
 
   toggleDone(event, list_item) {
-    this.props.dispatch(list_items.toggleDone(list_item));
+    this.props.dispatch(list_items.patch(list_item, {
+      done: !list_item.done
+    }));
     event.stopPropagation();
   }
 
