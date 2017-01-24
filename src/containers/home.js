@@ -9,9 +9,6 @@ import Lists from './home/lists';
 import Form from './home/form';
 import Filters from '../components/home/filters';
 import AddButton from '../components/common/add_button';
-import * as lists from '../actions/lists';
-import * as session from '../actions/session';
-import redirect from '../helpers/redirect';
 
 class Home extends React.Component {
   constructor(props) {
