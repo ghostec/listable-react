@@ -17,10 +17,10 @@ class ItemsContainer extends React.Component {
   }
 
   render() {
-    const { list_items, toggleOptions } = this.props;
+    const { list_items, dispatch, toggleOptions } = this.props;
     const { toggleDone } = this;
 
-    return <Items list_items={list_items} toggleDone={toggleDone} toggleOptions={toggleOptions} />;
+    return <Items list_items={list_items} dispatch={dispatch} toggleDone={toggleDone} toggleOptions={toggleOptions} />;
   }
 };
 

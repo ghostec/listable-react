@@ -9,7 +9,6 @@ import Form from './list/form';
 import TopBar from './list/topbar';
 import Info from '../components/list/info';
 import AddButton from '../components/common/add_button';
-import Options from './list/options';
 
 class List extends React.Component {
   constructor(props) {
@@ -17,8 +16,7 @@ class List extends React.Component {
 
     this.state = {
       show_form: false,
-      show_options: false,
-      options_item: null
+      options_component: null
     };
 
     this.toggleForm = this.toggleForm.bind(this);
@@ -32,30 +30,27 @@ class List extends React.Component {
     });
   }
   
-  toggleOptions(event, item) {
+  toggleOptions(event, component = null) {
     this.setState({
       ...this.state,
-      show_options: !this.state.show_options,
-      options_item: item
+      options_component: component,
     });
   }
   
   render() {
     const { toggleForm, toggleOptions } = this;
-    const { options_item, show_form, show_options } = this.state;
+    const { show_form, options_component } = this.state;
     const { list, list_items } = this.props;
-
+    
     return (
-      <div>
-        {show_options && <Options item={options_item} toggleOptions={toggleOptions} />}
-        <list>
-          <TopBar n_items={list_items.length} />
-          <Info list={list} />
-          {show_form && <Form list={list} toggleForm={toggleForm} />}
-          <Items list_items={list_items} toggleOptions={toggleOptions}/>
-          {!show_form && <AddButton toggleForm={toggleForm} />}
-        </list>
-      </div>
+      <list>
+        {options_component}
+        <TopBar n_items={list_items.length} />
+        <Info list={list} />
+        {show_form && <Form list={list} toggleForm={toggleForm} />}
+        <Items list_items={list_items} toggleOptions={toggleOptions}/>
+        {!show_form && <AddButton toggleForm={toggleForm} />}
+      </list>
     );
   }
 };

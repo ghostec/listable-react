@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
+import Options from './options/list_item';
+
 const Done = props => {
   const { item, toggleDone } = props;
   const { done } = item;
@@ -22,10 +24,11 @@ const Done = props => {
 }
 
 const Item = props => {
-  const { item, toggleDone, toggleOptions } = props;
+  const { item, dispatch, toggleDone, toggleOptions } = props;
+  const options_component = <Options item={item} toggleOptions={toggleOptions} dispatch={dispatch} />;
 
   return (
-    <li onClick={(event) => toggleOptions(event, item)}>
+    <li onClick={(event) => toggleOptions(event, options_component)}>
       <list-item-info>
         <list-item-info-left>
           <img src="images/youtube.svg" />
@@ -42,11 +45,11 @@ const Item = props => {
 export default props => {
   if(_.isEmpty(props.list_items)) return <div>loading...</div>;
 
-  const { toggleDone, toggleOptions } = props;
+  const { dispatch, toggleDone, toggleOptions } = props;
 
   return (
     <list-items>
-      <ul>{props.list_items.map((v, k) => <Item key={k} item={v} toggleDone={toggleDone} toggleOptions={toggleOptions} />)}</ul>
+      <ul>{props.list_items.map((v, k) => <Item key={k} item={v} dispatch={dispatch} toggleDone={toggleDone} toggleOptions={toggleOptions} />)}</ul>
     </list-items>
   );
 };
