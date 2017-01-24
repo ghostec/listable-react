@@ -4,28 +4,16 @@ import _ from 'lodash';
 import * as common from './common';
 import { apiPath } from '../helpers/common';
 
-export const create = (name) => {
-  return (dispatch, getState) => {
-    const token = getState().session.get('token');
+export const create = (list) => {
+  return common.create(list, 'list', 'lists');
+};
 
-    return fetch(`${apiPath}/lists`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        token,
-        name
-      })
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-      return response.json();
-    })
-    .then(list => dispatch({ type: 'LISTS/CREATE', list: Immutable.fromJS(list) }));
-  }
+export const patch = (list, changes) => {
+  return common.patch(list, changes, 'list', 'lists');
+};
+
+export const remove = (list) => {
+  return common.remove(list, 'list', 'lists');
 };
 
 export const index = () => {
@@ -86,12 +74,4 @@ export const get = ({ id }) => {
       }
     }); 
   }
-};
-
-export const patch = (list, changes) => {
-  return common.patch(list, changes, 'list', 'lists');
-};
-
-export const remove = (list) => {
-  return common.remove(list, 'list', 'lists')
 };

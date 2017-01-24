@@ -4,28 +4,15 @@ import * as common from './common';
 import { apiPath } from '../helpers/common';
 
 export const create = (list_id, url) => {
-  return (dispatch, getState) => {
-    const token = getState().session.get('token');
+  return common.create({ list_id, url }, 'list_item', 'list_items');
+};
 
-    return fetch(`${apiPath}/list_items`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        token,
-        url,
-        list_id
-      })
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-      return response.json();
-    })
-    .then(list_item => dispatch({ type: 'LIST_ITEMS/CREATE', list_item: Immutable.fromJS(list_item) }));
-  };
+export const patch = (list_item, changes) => {
+  return common.patch(list_item, changes, 'list_item', 'list_items');
+};
+
+export const remove = (list_item) => {
+  return common.remove(list_item, 'list_item', 'list_items');
 };
 
 export const fromList = (list_id) => {
@@ -60,12 +47,4 @@ export const fromList = (list_id) => {
       }
     }); 
   };
-};
-
-export const patch = (list_item, changes) => {
-  return common.patch(list_item, changes, 'list_item', 'list_items');
-};
-
-export const remove = (list_item) => {
-  return common.remove(list_item, 'list_item', 'list_items');
 };

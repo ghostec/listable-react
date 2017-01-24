@@ -3,6 +3,30 @@ import _ from 'lodash';
 
 import { apiPath } from '../helpers/common';
 
+export const create = (obj, singular, plural) => {
+  return (dispatch, getState) => {
+    const token = getState().session.get('token');
+
+    return fetch(`${apiPath}/${_.toLower(plural)}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token,
+        ...obj
+      })
+    }).then(response => {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return response.json();
+    })
+    .then(json => dispatch({ type: `${_.toUpper(plural)}/CREATE`, [_.toLower(singular)]: Immutable.fromJS(json) }));
+  };
+};
+
 export const patch = (obj, changes, singular, plural) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
@@ -36,7 +60,7 @@ export const remove = (obj, singular, plural) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${apiPath}/${_.toLower(plural)}/${list._id}`, {
+    return fetch(`${apiPath}/${_.toLower(plural)}/${obj._id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',

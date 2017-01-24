@@ -41,6 +41,8 @@ class List extends React.Component {
     const { toggleForm, toggleOptions } = this;
     const { show_form, options_component } = this.state;
     const { list, list_items, dispatch } = this.props;
+
+    if(_.isEmpty(list)) return (<div>loading...</div>);
     
     return (
       <list>
@@ -57,9 +59,9 @@ class List extends React.Component {
 
 const mapStateToProps = state => {
   const list_id = state.navigation.get('location').options.id;
-  const list = state.lists.get(list_id).toJS();
+  const list = state.lists.get(list_id) && state.lists.get(list_id).toJS();
   
-  const list_items = state.list_items.toJS();
+  const list_items = state.list_items && state.list_items.toJS();
   const sorted = _.map(list_items, v => v).sort((a, b) => {
     return (a.updated_at < b.updated_at ? 1 : -1)
   });

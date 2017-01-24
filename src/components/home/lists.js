@@ -1,8 +1,14 @@
 import React from 'react';
 import _ from 'lodash';
 
+import redirect from '../../helpers/redirect';
+
+const goToList = list => {
+  redirect(`list/${list._id}`);
+}
+
 const List = props => {
-  const { goToList, list } = props;
+  const { list } = props;
 
   return (
     <li onClick={() => goToList(list)}>
@@ -13,12 +19,12 @@ const List = props => {
 }
 
 export default props => {
-  const { lists, goToList } = props;
+  const { lists } = props;
 
   if(_.isEmpty(lists)) return <div>loading...</div>;
 
   const lists_lis = lists.map((list, k) => {
-    return <List key={k} list={list} goToList={goToList} />;
+    return <List key={k} list={list} />;
   });
 
   return (
