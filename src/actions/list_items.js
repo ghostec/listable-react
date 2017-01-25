@@ -38,11 +38,11 @@ export const fromList = (list_id) => {
         return obj;
       }, {}));
 
-      const state_list_items = getState().list_items;
+      const state_list_items = getState().list_items.get(list_id);
 
       if(!normalized.equals(state_list_items)) {
         dispatch({
-          type: 'LIST_ITEMS/FROM_LIST', list_items: normalized
+          type: 'LIST_ITEMS/FROM_LIST', list_id, list_items: normalized
         });
       }
     }); 

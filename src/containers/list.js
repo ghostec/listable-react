@@ -57,13 +57,12 @@ class List extends React.Component {
   }
 };
 
-const mapStateToProps = state => {
-  const list_id = state.navigation.get('location').options.id;
-  const list = state.lists.get(list_id) && state.lists.get(list_id).toJS();
+import { getList, getListSize } from '../selectors/lists';
 
+const mapStateToProps = state => {
   return {
-    list,
-    n_items: state.list_items.size
+    list: getList(state),
+    n_items: getListSize(state)
   };
 }
 

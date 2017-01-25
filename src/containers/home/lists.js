@@ -18,13 +18,11 @@ class ListsContainer extends React.Component {
   }
 };
 
-const mapStateToProps = state => {
-  const sorted_lists = _.map(state.lists.toJS(), v => v).sort((a, b) => {
-    return (a.last_seen_at < b.last_seen_at ? 1 : -1)
-  });
+import { getLists } from '../../selectors/lists';
 
+const mapStateToProps = state => {
   return {
-    lists: sorted_lists
+    lists: getLists(state)
   };
 }
 

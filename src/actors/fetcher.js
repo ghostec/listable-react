@@ -16,6 +16,7 @@ export default (state, dispatch) => {
   }
   else if(location.name == 'list') {
     const list_id = location.options.id;
+    dispatch(lists.get(list_id));
     dispatch(list_items.fromList(list_id));
     dispatch(user_list_items.fromList(list_id));
   }

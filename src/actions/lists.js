@@ -48,11 +48,11 @@ export const fromUser = (user_id) => {
   }
 };
 
-export const get = ({ id }) => {
+export const get = (list_id) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${apiPath}/lists/${id}`, {
+    return fetch(`${apiPath}/lists/${list_id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

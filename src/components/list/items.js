@@ -14,7 +14,7 @@ const toggleDone = (event, dispatch, user_item) => {
 const Done = props => {
   const { user_item, dispatch } = props;
 
-  if(!user_item) return <div>loading...</div>;
+  if(_.isEmpty(user_item)) return <div>loading...</div>;
 
   const { done } = user_item;
 
@@ -45,7 +45,7 @@ const Item = props => {
           <img src="images/youtube.svg" />
         </list-item-info-left>
         <list-item-info-right>
-          <Done user_item={user_item} dispatch={dispatch} />
+          {(user_item && user_item.owner) && <Done user_item={user_item} dispatch={dispatch} />}
         </list-item-info-right>
       </list-item-info>
       <list-item-name>{item.name}</list-item-name>
@@ -60,7 +60,7 @@ export default props => {
 
   return (
     <list-items>
-      <ul>{list_items.map((item, k) => <Item key={k} item={item} user_item={user_list_items[item._id]} dispatch={dispatch} toggleOptions={toggleOptions} />)}</ul>
+      <ul>{list_items.map((item, k) => <Item key={k} item={item} user_item={user_list_items && user_list_items[item._id]} dispatch={dispatch} toggleOptions={toggleOptions} />)}</ul>
     </list-items>
   );
 };
