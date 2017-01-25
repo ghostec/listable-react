@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import { REHYDRATE } from 'redux-persist/constants';
 
-const initialState = Immutable.fromJS({
+const initialState = Immutable.Map({
   rehydrated: false
 });
 

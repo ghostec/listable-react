@@ -31,6 +31,7 @@ class List extends React.Component {
   }
   
   toggleOptions(event, component = null) {
+    console.log("asdf");
     this.setState({
       ...this.state,
       options_component: component,
@@ -40,17 +41,17 @@ class List extends React.Component {
   render() {
     const { toggleForm, toggleOptions } = this;
     const { show_form, options_component } = this.state;
-    const { list, list_items, dispatch } = this.props;
+    const { list, n_items, dispatch } = this.props;
 
     if(_.isEmpty(list)) return (<div>loading...</div>);
     
     return (
       <list>
         {options_component}
-        <TopBar n_items={list_items.length} />
+        <TopBar n_items={n_items} />
         <Info list={list} toggleOptions={toggleOptions} dispatch={dispatch} />
         {show_form && <Form list={list} toggleForm={toggleForm} />}
-        <Items list_items={list_items} toggleOptions={toggleOptions}/>
+        <Items toggleOptions={toggleOptions}/>
         {!show_form && <AddButton toggleForm={toggleForm} />}
       </list>
     );
@@ -60,15 +61,10 @@ class List extends React.Component {
 const mapStateToProps = state => {
   const list_id = state.navigation.get('location').options.id;
   const list = state.lists.get(list_id) && state.lists.get(list_id).toJS();
-  
-  const list_items = state.list_items && state.list_items.toJS();
-  const sorted = _.map(list_items, v => v).sort((a, b) => {
-    return (a.updated_at < b.updated_at ? 1 : -1)
-  });
 
   return {
     list,
-    list_items: sorted
+    n_items: state.list_items.size
   };
 }
 

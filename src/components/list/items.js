@@ -2,10 +2,18 @@ import React from 'react';
 import _ from 'lodash';
 
 import Options from './options/list_item';
+import * as user_list_items from '../../actions/user_list_items';
+
+const toggleDone = (event, dispatch, user_item) => {
+  dispatch(user_list_items.patch(user_item, {
+    done: !user_item.done
+  }));
+  event.stopPropagation();
+}
 
 const Done = props => {
-  const { item, toggleDone } = props;
-  const { done } = item;
+  const { user_item, dispatch } = props;
+  const { done } = user_item;
 
   const donePart = (
     <img src="images/ring-checked.svg" />
@@ -17,14 +25,14 @@ const Done = props => {
   ].map((v, k) => <span key={k}>{v}</span>);
 
   return (
-    <list-item-info-right-done onClick={(event) => toggleDone(event, item)}>
+    <list-item-info-right-done onClick={(event) => toggleDone(event, dispatch, user_item)}>
       {done ? donePart : notDonePart}
     </list-item-info-right-done>
   );
 }
 
 const Item = props => {
-  const { item, dispatch, toggleDone, toggleOptions } = props;
+  const { item, user_item, dispatch, toggleOptions } = props;
   const options_component = <Options item={item} toggleOptions={toggleOptions} dispatch={dispatch} />;
 
   return (
@@ -34,7 +42,7 @@ const Item = props => {
           <img src="images/youtube.svg" />
         </list-item-info-left>
         <list-item-info-right>
-          <Done item={item} toggleDone={toggleDone}/>
+          <Done user_item={user_item} dispatch={dispatch} />
         </list-item-info-right>
       </list-item-info>
       <list-item-name>{item.name}</list-item-name>
@@ -43,13 +51,13 @@ const Item = props => {
 };
 
 export default props => {
-  if(_.isEmpty(props.list_items)) return <div>loading...</div>;
+  const { list_items, user_list_items, dispatch, toggleOptions } = props;
 
-  const { dispatch, toggleDone, toggleOptions } = props;
+  if(_.isEmpty(list_items) || _.isEmpty(user_list_items)) return <div>loading...</div>;
 
   return (
     <list-items>
-      <ul>{props.list_items.map((v, k) => <Item key={k} item={v} dispatch={dispatch} toggleDone={toggleDone} toggleOptions={toggleOptions} />)}</ul>
+      <ul>{list_items.map((item, k) => <Item key={k} item={item} user_item={user_list_items[item._id]} dispatch={dispatch} toggleOptions={toggleOptions} />)}</ul>
     </list-items>
   );
 };

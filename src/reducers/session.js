@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-const initialState = Immutable.fromJS({});
+const initialState = Immutable.Map();
 
 export default (state = initialState, action) => {
   switch (action.type) {

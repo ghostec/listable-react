@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-import * as lists from '../actions/lists'
-import * as list_items from '../actions/list_items'
+import * as lists from '../actions/lists';
+import * as list_items from '../actions/list_items';
+import * as user_list_items from '../actions/user_list_items';
 
 export default (state, dispatch) => {
   const token = state.session.get('token', undefined);
@@ -15,5 +16,6 @@ export default (state, dispatch) => {
   else if(location.name == 'list') {
     const list_id = location.options.id;
     dispatch(list_items.fromList(list_id));
+    dispatch(user_list_items.fromList(list_id));
   }
 };
