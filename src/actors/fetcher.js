@@ -11,7 +11,8 @@ export default (state, dispatch) => {
   const location = state.navigation.get('location')
 
   if(location.name == 'home') {
-    dispatch(lists.index());
+    const user_id = state.session.get('user_id');
+    dispatch(lists.fromUser(user_id));
   }
   else if(location.name == 'list') {
     const list_id = location.options.id;

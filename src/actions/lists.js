@@ -16,11 +16,11 @@ export const remove = (list) => {
   return common.remove(list, 'list', 'lists');
 };
 
-export const index = () => {
+export const fromUser = (user_id) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${apiPath}/lists`, {
+    return fetch(`${apiPath}/users/${user_id}/lists`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -42,7 +42,7 @@ export const index = () => {
       const state_lists = getState().lists;
 
       if(!normalized.equals(state_lists)) {
-        dispatch({ type: 'LISTS/INDEX', lists: normalized });
+        dispatch({ type: 'LISTS/FROM_USER', lists: normalized });
       }
     }); 
   }

@@ -31,7 +31,6 @@ class List extends React.Component {
   }
   
   toggleOptions(event, component = null) {
-    console.log("asdf");
     this.setState({
       ...this.state,
       options_component: component,

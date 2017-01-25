@@ -18,7 +18,7 @@ export const signIn = (email, password) => {
       }
       return response.json();
     })
-    .then(data => dispatch({ type: 'SESSION/SET_TOKEN', token: data.token }));
+    .then(data => dispatch({ type: 'SESSION/SET_TOKEN', ...data }));
   }
 }
 
@@ -41,7 +41,7 @@ export const signUp = (name, email, password) => {
       }
       return response.json();
     })
-    .then(data => dispatch({ type: 'SESSION/SET_TOKEN', token: data.token }));
+    .then(data => dispatch({ type: 'SESSION/SET_TOKEN', ...data }));
   }
 }
 

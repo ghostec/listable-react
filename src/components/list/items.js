@@ -13,6 +13,9 @@ const toggleDone = (event, dispatch, user_item) => {
 
 const Done = props => {
   const { user_item, dispatch } = props;
+
+  if(!user_item) return <div>loading...</div>;
+
   const { done } = user_item;
 
   const donePart = (
@@ -53,7 +56,7 @@ const Item = props => {
 export default props => {
   const { list_items, user_list_items, dispatch, toggleOptions } = props;
 
-  if(_.isEmpty(list_items) || _.isEmpty(user_list_items)) return <div>loading...</div>;
+  if(_.isEmpty(list_items)) return <div>loading...</div>;
 
   return (
     <list-items>
