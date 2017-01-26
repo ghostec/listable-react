@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import update from 'react-addons-update';
 
 import '../styles/home';
 
@@ -15,10 +14,12 @@ class Home extends React.Component {
     super(props)
 
     this.state = {
-      show_form: false
+      show_form: false,
+      options_component: null
     };
 
     this.toggleForm = this.toggleForm.bind(this);
+    this.toggleOptions = this.toggleOptions.bind(this);
   }
 
   toggleForm() {
@@ -28,14 +29,22 @@ class Home extends React.Component {
     });
   }
 
+  toggleOptions(event, component = null) {
+    this.setState({
+      ...this.state,
+      options_component: component,
+    });
+  }
+
   render() {
     const { lists } = this.props;
-    const { show_form } = this.state;
-    const { toggleForm} = this;
+    const { show_form, options_component } = this.state;
+    const { toggleForm, toggleOptions } = this;
 
     return (
       <home>
-        <TopBar/>
+        {options_component}
+        <TopBar toggleOptions={toggleOptions} />
         <Filters />
         {show_form && <Form toggleForm={toggleForm} />}
         <Lists />

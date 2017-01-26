@@ -51,7 +51,7 @@ class List extends React.Component {
         <Info list={list} toggleOptions={toggleOptions} dispatch={dispatch} />
         {show_form && <Form list={list} toggleForm={toggleForm} />}
         <Items toggleOptions={toggleOptions}/>
-        {!show_form && <AddButton toggleForm={toggleForm} />}
+        {(list.owner && !show_form) && <AddButton toggleForm={toggleForm} />}
       </list>
     );
   }

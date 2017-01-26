@@ -2,13 +2,19 @@ import React from 'react';
 
 import '../../styles/topbar';
 
+import Options from './options';
+
 export default (props) => {
+  const { toggleOptions, dispatch } = props;
+
+  const options_component = <Options toggleOptions={toggleOptions} dispatch={dispatch} />;
+
   return (
     <topbar>
       <topbar-wrap>
         <topbar-content>
           <topbar-left>
-            <img src="images/more.svg" onClick={props.signOut} />
+            <img src="images/more.svg" onClick={event => toggleOptions(event, options_component)} />
           </topbar-left>
           <topbar-center>
             Listable
