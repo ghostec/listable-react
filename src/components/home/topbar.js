@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../../styles/topbar';
 
-import Options from './options';
+import Options from '../../containers/home/options/options';
 
 export default (props) => {
   const { toggleOptions, dispatch } = props;

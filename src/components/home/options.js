@@ -12,8 +12,8 @@ export default props => {
   const { dispatch, toggleOptions } = props;
 
   return (
-    <options onClick={(event) => toggleOptions(event)}>
+    <options-wrap>
       <options-option onClick={event => signOut(event, toggleOptions, dispatch)}>Sign out</options-option>
-    </options>
+    </options-wrap>
   );
 };
