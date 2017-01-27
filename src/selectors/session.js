@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 export const getUserId = state => {
-  return state.session && state.session.get('user_id');
+  return state.session && state.session.get('user').get('_id');
 }
 
 export const includeOwner = (state, obj) => {

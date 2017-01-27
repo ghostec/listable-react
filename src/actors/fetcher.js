@@ -11,7 +11,7 @@ export default (state, dispatch) => {
   const location = state.navigation.get('location')
 
   if(location.name == 'home') {
-    const user_id = state.session.get('user_id');
+    const user_id = state.session.get('user').get('_id');
     dispatch(lists.fromUser(user_id));
   }
   else if(location.name == 'list') {

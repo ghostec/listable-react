@@ -5,9 +5,10 @@ const initialState = Immutable.Map();
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'SESSION/SET_TOKEN':
-      return state.set('token', action.token).set('user_id', action.user_id);
+      const { type, ...data } = action;
+      return Immutable.fromJS(data);
     case 'SESSION/DISCARD_TOKEN':
-      return state.delete('token').delete('user_id');
+      return Immutable.Map();
     default:
       return state;
   }
