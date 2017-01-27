@@ -23,14 +23,14 @@ options {
     > * {
       margin-bottom: 10px;
 
-      &:last-of-type { margin-bottom: 0; }
+      &:last-child { margin-bottom: 0; }
     }
   }
 
   > * {
     margin-bottom: 10px;
 
-    &:last-of-type { margin-bottom: 0; }
+    &:last-child { margin-bottom: 0; }
   }
 }
 

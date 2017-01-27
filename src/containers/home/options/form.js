@@ -1,19 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import update from 'react-addons-update';
+import { bindAll } from 'lodash';
+
+import * as common from '../../../helpers/common';
 
 class Form extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      picture: '',
       show_submit: false
     }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.selectPicture = this.selectPicture.bind(this);
+    bindAll(this, 'handleFile', 'handleSubmit', 'selectPicture');
   }
 
   componentDidMount() {
@@ -28,19 +28,59 @@ class Form extends React.Component {
     inputPicture.removeEventListener('click', event => event.stopPropagation());
   }
 
-  handleChange(event) {
-    var newState = update(this.state, {
-      [event.target.id]: {$set: event.target.value}
-    });
-    this.setState(newState);
+  handleFile(event) {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+
+    reader.onload = (upload) => {
+      this.setState({
+        data_uri: upload.target.result,
+        filename: file.name,
+        filetype: file.type,
+        show_submit: true
+      });
+    };
+
+    reader.readAsDataURL(file);
   }
 
   handleSubmit(event) {
-    const { picture } = this.state;
+    const { filename, filetype, data_uri } = this.state;
     const { dispatch } = this.props;
 
-    //dispatch(list_items.create(list._id, url));
+    fetch(`${common.apiPath}/users/s3policy`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        filename,
+        filetype
+      })
+    }).then(response => {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return response.json();
+    }).then(({ url }) => {
+      const buf = new Buffer(data_uri.replace(/^data:image\/\w+;base64,/, ''), 'base64');
+
+      fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Length': buf.length,
+          'Content-Type': filetype,
+          'x-amz-acl': 'public-read'
+        },
+        body: buf
+      }).then(response => {
+        console.log(response);
+      })
+    })
+
     event.preventDefault();
+    event.stopPropagation();
   }
 
   selectPicture(event, inputElement) {
@@ -51,16 +91,16 @@ class Form extends React.Component {
   }
 
   render() {
-    const { picture, show_submit } = this.state;
+    const { show_submit } = this.state;
     const { dispatch } = this.props;
-    const { handleSubmit, handleChange, selectPicture } = this;
+    const { handleSubmit, handleFile, selectPicture } = this;
 
     return (
       <options-wrap>
         <options-option onClick={selectPicture}>Select picture</options-option>
         <form onSubmit={handleSubmit}>
-          <input id='picture' type='file' ref='inputPicture' style={{display: 'none'}} value={picture} onChange={handleChange} />
-          {show_submit && <input id='submit' type='submit' value='' />}
+          <input id='picture' type='file' ref='inputPicture' style={{display: 'none'}} onChange={handleFile} />
+          {show_submit && <input id='submit' type='submit' value='submit' onClick={handleSubmit} />}
         </form>
       </options-wrap>
     );
