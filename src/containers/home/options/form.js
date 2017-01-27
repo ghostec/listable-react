@@ -4,6 +4,7 @@ import update from 'react-addons-update';
 import { bindAll } from 'lodash';
 
 import * as common from '../../../helpers/common';
+import { getCurrentUser } from '../../../selectors/users';
 
 class Form extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class Form extends React.Component {
     const { filename, filetype, data_uri } = this.state;
     const { dispatch } = this.props;
 
-    fetch(`${common.apiPath}/users/s3policy`, {
+    fetch(`${common.apiPath}/aws/s3/policy/profile`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -63,7 +64,7 @@ class Form extends React.Component {
         throw new Error("Bad response from server");
       }
       return response.json();
-    }).then(({ url }) => {
+    }).then(({ url, key }) => {
       const buf = new Buffer(data_uri.replace(/^data:image\/\w+;base64,/, ''), 'base64');
 
       fetch(url, {
@@ -75,7 +76,10 @@ class Form extends React.Component {
         },
         body: buf
       }).then(response => {
-        console.log(response);
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        // UPDATE USER PICTURE
       })
     })
 
@@ -107,4 +111,10 @@ class Form extends React.Component {
   }
 }
 
-export default connect()(Form);
+const mapStateToProps = state => {
+  return {
+    user: getCurrentUser(state)
+  };
+}
+
+export default connect(mapStateToProps)(Form);

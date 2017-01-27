@@ -9,6 +9,7 @@ import session from './session';
 import lists from './lists';
 import list_items from './list_items';
 import user_list_items from './user_list_items';
+import users from './users';
 
 const rootReducer = combineReducers({
   navigation,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   session,
   lists,
   list_items,
-  user_list_items
+  user_list_items,
+  users
 });
 
 const store = compose(applyMiddleware(thunk))(createStore)(rootReducer, undefined, autoRehydrate());
