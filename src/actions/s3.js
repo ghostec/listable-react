@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+import * as config from '../config';
 import * as common from '../helpers/common';
 import * as users from './users';
 
@@ -28,7 +29,7 @@ export const uploadProfilePicture = (file) => {
       _.forEach(response.fields, (value, key) => formData.append(key, value));
       formData.append('file', file);
 
-      fetch('https://listable-dev.s3.amazonaws.com', {
+      fetch(`https://${config.s3.bucket}.s3.amazonaws.com`, {
         method: 'POST',
         body: formData
       }).then(response2 => {
