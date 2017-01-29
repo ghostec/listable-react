@@ -25,9 +25,12 @@ class Form extends React.Component {
 
   handleSubmit(event) {
     const { name } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, toggleForm } = this.props;
 
     dispatch(lists.create({ name }));
+
+    toggleForm();
+
     event.preventDefault();
   }
 

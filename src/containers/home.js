@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 
 import '../styles/home';
 
+import * as lists from '../actions/lists';
+import * as users from '../actions/users';
+import { getUserId } from '../selectors/session';
+
 import TopBar from './home/topbar';
 import Lists from './home/lists';
 import Form from './home/form';
@@ -36,6 +40,12 @@ class Home extends React.Component {
     });
   }
 
+  componentDidMount() {
+    const { user_id, dispatch } = this.props;
+    dispatch(lists.fromUser(user_id));
+    dispatch(users.get(user_id));
+  }
+
   render() {
     const { lists } = this.props;
     const { show_form, options_component } = this.state;
@@ -54,4 +64,8 @@ class Home extends React.Component {
   }
 };
 
-export default Home;
+export default connect(state => {
+  return {
+    user_id: getUserId(state)
+  };
+})(Home);

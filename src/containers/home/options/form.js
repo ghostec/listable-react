@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import update from 'react-addons-update';
-import { bindAll } from 'lodash';
+import { bindAll, isEmpty } from 'lodash';
 
 import * as common from '../../../helpers/common';
 import { getCurrentUser } from '../../../selectors/users';
@@ -37,6 +37,15 @@ class Form extends React.Component {
       file: file,
       show_submit: true
     });
+
+    const reader = new FileReader();
+
+    reader.onload = event => {
+      const { userPicture } = this.refs;
+      userPicture.src = event.target.result;
+    }
+
+    reader.readAsDataURL(file);
   }
 
   handleSubmit(event) {
@@ -57,17 +66,19 @@ class Form extends React.Component {
   }
 
   render() {
-    const { show_submit } = this.state;
-    const { dispatch } = this.props;
+    const { show_submit, file } = this.state;
+    const { dispatch, user } = this.props;
     const { handleSubmit, handleFile, selectPicture } = this;
 
     return (
       <options-wrap>
-        <options-option onClick={selectPicture}>Select picture</options-option>
+        <upload-profile-picture onClick={selectPicture}>
+          <img ref={'userPicture'} src={isEmpty(user.picture) ? 'images/upload-profile-picture.svg' : user.picture} />
+        </upload-profile-picture>
         <form onSubmit={handleSubmit}>
           <input type='file' ref='inputPicture' style={{display: 'none'}} onChange={handleFile} />
-          {show_submit && <input id='submit' type='submit' value='submit' onClick={handleSubmit} />}
         </form>
+        {show_submit && <options-option-yellow onClick={handleSubmit}>Upload picture</options-option-yellow>}
       </options-wrap>
     );
   }

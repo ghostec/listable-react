@@ -34,6 +34,20 @@ options {
   }
 }
 
+upload-profile-picture {
+  @include calc(width, '100% - 40px');
+  @include calc(max-width, 200px);
+  @include border-radius(50%);
+  overflow: hidden;
+  text-align: center;
+  display: block;
+  
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
 @mixin options-option($background, $font-color: #333333) {
   @include secondary-font(24px, #333333, 700);
   @include calc(width, '100% - 40px');

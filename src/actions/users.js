@@ -46,7 +46,7 @@ export const get = (user_id) => {
       const state_user = getState().users.get(user._id);
 
       const normalized = Immutable.fromJS(
-        isProfilePictureUpdated(state_user.toJS(), user) ?
+        isProfilePictureUpdated(state_user && state_user.toJS(), user) ?
           user : setProfilePictureInDbUser(state_user.toJS(), user)
       );
 

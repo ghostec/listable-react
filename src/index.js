@@ -6,9 +6,8 @@ import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 
 import store from './reducers/index';
+import RoutesComponents from './constants/routes_components';
 import * as navigation from './actions/navigation';
-import renderer from './actors/renderer';
-import fetcher from './actors/fetcher';
 import routes from './constants/routes';
 import _ from 'lodash';
 
@@ -30,13 +29,26 @@ var onHashChange = () => {
 window.addEventListener('hashchange', onHashChange, false);
 onHashChange();
 
-const actors = [fetcher, renderer]
+const App = (props) => {
+  const { rehydrated } = props.storage.toObject();
+  if(!rehydrated) return <div/>;
 
-let acting = false;
-store.subscribe(() => {
-  if(!acting) {
-    acting = true;
-    for(let actor of actors) actor(store.getState(), store.dispatch)
-    acting = false;
+  const location = props.navigation.get('location');
+  const token = props.session.get('token', undefined);
+
+  let route = RoutesComponents[location.name] || RoutesComponents.default;
+  if(token == undefined && route.public != true) {
+    route = RoutesComponents.redirect('auth');
   }
-})
+
+  return route.component;
+}
+
+const AppContainer = connect(state => state)(App);
+
+const APP_NODE = document.getElementById('app')
+
+ReactDOM.render(
+  <Provider store={store}><AppContainer /></Provider>,
+    APP_NODE
+);
