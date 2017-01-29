@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import * as config from '../config';
+import config from '../config';
 import * as common from '../helpers/common';
 import * as users from './users';
 
