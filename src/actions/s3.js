@@ -28,23 +28,15 @@ export const uploadProfilePicture = (file) => {
       _.forEach(response.fields, (value, key) => formData.append(key, value));
       formData.append('file', file);
 
-      for (var pair of formData.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-      }
-
       fetch('https://listable-dev.s3.amazonaws.com', {
         method: 'POST',
-        headers: {
-        },
         body: formData
-      }).then(response => {
+      }).then(response2 => {
         if (response.status >= 400) {
           throw new Error("Bad response from server");
         }
-        console.log(response);
-        //dispatch(users.patch(user, {
-        //  picture: key
-        //}));
+        console.log(response2);
+        dispatch(users.setRawProfilePicture(response.fields.key));
       })
     });
   };

@@ -3,6 +3,23 @@ import _ from 'lodash';
 
 import * as common from './common';
 import { apiPath } from '../helpers/common';
+import { rawProfilePicturePath } from '../helpers/s3';
+import { isProfilePictureUpdated, setProfilePictureInDbUser } from '../helpers/users';
+
+export const setRawProfilePicture = key => {
+  return (dispatch, getState) => {
+    const user_id = getState().session.get('user_id');
+
+    dispatch({
+      type: 'USERS/SET_RAW_PROFILE_PICTURE',
+      user_id,
+      picture: Immutable.Map({
+        url: rawProfilePicturePath(key),
+        raw: true
+      })
+    });
+  }
+}
 
 export const patch = (user, changes) => {
   return common.patch(user, changes, 'user', 'users');
@@ -26,11 +43,18 @@ export const get = (user_id) => {
       return response.json();
     })
     .then(user => {
-      const normalized = Immutable.fromJS(user);
       const state_user = getState().users.get(user._id);
 
+      const normalized = Immutable.fromJS(
+        isProfilePictureUpdated(state_user.toJS(), user) ?
+          user : setProfilePictureInDbUser(state_user.toJS(), user)
+      );
+
       if(!normalized.equals(state_user)) {
-        dispatch({ type: 'USERS/GET', user: normalized });
+        dispatch({
+          type: 'USERS/GET',
+          user: normalized
+        });
       }
     }); 
   }

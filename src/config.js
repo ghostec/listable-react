@@ -3,6 +3,7 @@ const dev = {
   apiVersion: 'v1',
   s3: {
     bucket: 'listable-dev',
+    raw_profile_pictures: 'raw/profile_pictures',
     profile_pictures: 'profile_pictures'
   }
 };
@@ -12,6 +13,7 @@ const prd = {
   apiVersion: 'v1',
   s3: {
     bucket: 'listable-prd',
+    raw_profile_pictures: 'raw/profile_pictures',
     profile_pictures: 'profile_pictures'
   }
 };
