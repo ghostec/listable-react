@@ -9,6 +9,6 @@ export const getCurrentUser = state => {
 
   return user && {
     ...user,
-    picture: profilePicturePath(user.picture)
+    picture: profilePicturePath(user)
   };
 }

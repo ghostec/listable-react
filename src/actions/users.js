@@ -4,8 +4,8 @@ import _ from 'lodash';
 import * as common from './common';
 import { apiPath } from '../helpers/common';
 
-export const patch = (list, changes) => {
-  return common.patch(list, changes, 'list', 'lists');
+export const patch = (user, changes) => {
+  return common.patch(user, changes, 'user', 'users');
 };
 
 export const get = (user_id) => {

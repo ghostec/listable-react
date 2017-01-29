@@ -1,0 +1,51 @@
+import _ from 'lodash';
+
+import * as common from '../helpers/common';
+import * as users from './users';
+
+export const uploadProfilePicture = (file) => {
+  return (dispatch, getState) => {
+    const token = getState().session.get('token');
+
+    return fetch(`${common.apiPath}/aws/s3/policy/profile`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        filename: file.name,
+        filetype: file.type,
+        token
+      })
+    }).then(response => {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return response.json();
+    }).then((response) => {
+      let formData = new FormData();
+      _.forEach(response.fields, (value, key) => formData.append(key, value));
+      formData.append('file', file);
+
+      for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+      }
+
+      fetch('https://listable-dev.s3.amazonaws.com', {
+        method: 'POST',
+        headers: {
+        },
+        body: formData
+      }).then(response => {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        console.log(response);
+        //dispatch(users.patch(user, {
+        //  picture: key
+        //}));
+      })
+    });
+  };
+};

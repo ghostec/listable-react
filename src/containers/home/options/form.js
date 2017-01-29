@@ -5,6 +5,7 @@ import { bindAll } from 'lodash';
 
 import * as common from '../../../helpers/common';
 import { getCurrentUser } from '../../../selectors/users';
+import * as s3 from '../../../actions/s3';
 
 class Form extends React.Component {
   constructor(props) {
@@ -30,58 +31,19 @@ class Form extends React.Component {
   }
 
   handleFile(event) {
-    const reader = new FileReader();
     const file = event.target.files[0];
 
-    reader.onload = (upload) => {
-      this.setState({
-        data_uri: upload.target.result,
-        filename: file.name,
-        filetype: file.type,
-        show_submit: true
-      });
-    };
-
-    reader.readAsDataURL(file);
+    this.setState({
+      file: file,
+      show_submit: true
+    });
   }
 
   handleSubmit(event) {
-    const { filename, filetype, data_uri } = this.state;
-    const { dispatch } = this.props;
+    const { file, filename } = this.state;
+    const { dispatch, user } = this.props;
 
-    fetch(`${common.apiPath}/aws/s3/policy/profile`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        filename,
-        filetype
-      })
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-      return response.json();
-    }).then(({ url, key }) => {
-      const buf = new Buffer(data_uri.replace(/^data:image\/\w+;base64,/, ''), 'base64');
-
-      fetch(url, {
-        method: 'PUT',
-        headers: {
-          'Content-Length': buf.length,
-          'Content-Type': filetype,
-          'x-amz-acl': 'public-read'
-        },
-        body: buf
-      }).then(response => {
-        if (response.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        // UPDATE USER PICTURE
-      })
-    })
+    dispatch(s3.uploadProfilePicture(file));
 
     event.preventDefault();
     event.stopPropagation();
@@ -103,7 +65,7 @@ class Form extends React.Component {
       <options-wrap>
         <options-option onClick={selectPicture}>Select picture</options-option>
         <form onSubmit={handleSubmit}>
-          <input id='picture' type='file' ref='inputPicture' style={{display: 'none'}} onChange={handleFile} />
+          <input type='file' ref='inputPicture' style={{display: 'none'}} onChange={handleFile} />
           {show_submit && <input id='submit' type='submit' value='submit' onClick={handleSubmit} />}
         </form>
       </options-wrap>
