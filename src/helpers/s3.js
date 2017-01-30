@@ -4,9 +4,11 @@ export const bucketPath = bucket => {
   return `https://${bucket}.s3.amazonaws.com`;
 }
 
-export const profilePicturePath = user => {
+export const profilePicturePath = (user, size) => {
   if(!user.picture) return undefined;
-  return `${bucketPath(config.s3.bucket)}/${config.s3.profile_pictures}/${user._id}/${user.picture}`;
+  if(user.picture && user.picture.raw) return rawProfilePicturePath(user.picture.key);
+
+  return `${bucketPath(config.s3.bucket)}/${config.s3.profile_pictures}/${user._id}/${user.picture}_${size}.jpg`;
 }
 
 export const rawProfilePicturePath = key => {

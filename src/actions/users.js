@@ -14,7 +14,7 @@ export const setRawProfilePicture = key => {
       type: 'USERS/SET_RAW_PROFILE_PICTURE',
       user_id,
       picture: Immutable.Map({
-        url: rawProfilePicturePath(key),
+        key,
         raw: true
       })
     });

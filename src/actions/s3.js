@@ -36,7 +36,6 @@ export const uploadProfilePicture = (file) => {
         if (response.status >= 400) {
           throw new Error("Bad response from server");
         }
-        console.log(response2);
         dispatch(users.setRawProfilePicture(response.fields.key));
       })
     });

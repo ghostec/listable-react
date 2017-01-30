@@ -4,6 +4,7 @@ import update from 'react-addons-update';
 import { bindAll, isEmpty } from 'lodash';
 
 import * as common from '../../../helpers/common';
+import { profilePicturePath } from '../../../helpers/s3';
 import { getCurrentUser } from '../../../selectors/users';
 import * as s3 from '../../../actions/s3';
 
@@ -73,7 +74,7 @@ class Form extends React.Component {
     return (
       <options-wrap>
         <upload-profile-picture onClick={selectPicture}>
-          <img ref={'userPicture'} src={isEmpty(user.picture) ? 'images/upload-profile-picture.svg' : user.picture} />
+          <img ref={'userPicture'} src={isEmpty(user.picture) ? 'images/upload-profile-picture.svg' : profilePicturePath(user, 'medium')} />
         </upload-profile-picture>
         <form onSubmit={handleSubmit}>
           <input type='file' ref='inputPicture' style={{display: 'none'}} onChange={handleFile} />
