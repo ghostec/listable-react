@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import update from 'react-addons-update';
 import { bindAll, isEmpty } from 'lodash';
 
+import Spinner from '../../../components/common/spinner';
 import * as common from '../../../helpers/common';
 import { profilePicturePath } from '../../../helpers/s3';
 import { getCurrentUser } from '../../../selectors/users';
@@ -13,7 +14,8 @@ class Form extends React.Component {
     super(props)
 
     this.state = {
-      show_submit: false
+      show_submit: false,
+      processing: false
     }
 
     bindAll(this, 'handleFile', 'handleSubmit', 'selectPicture');
@@ -35,6 +37,7 @@ class Form extends React.Component {
     const file = event.target.files[0];
 
     this.setState({
+      ...this.state,
       file: file,
       show_submit: true
     });
@@ -50,24 +53,39 @@ class Form extends React.Component {
   }
 
   handleSubmit(event) {
-    const { file, filename } = this.state;
-    const { dispatch, user } = this.props;
-
-    dispatch(s3.uploadProfilePicture(file));
-
     event.preventDefault();
     event.stopPropagation();
+
+    const { file, filename, processing } = this.state;
+    const { dispatch, user } = this.props;
+
+    if(processing) return;
+
+    this.setState({
+      ...this.state,
+      processing: true
+    });
+
+    dispatch(s3.uploadProfilePicture(file)).then(() => {
+      this.setState({
+        show_submit: false,
+        processing: false
+      });
+    });
   }
 
   selectPicture(event, inputElement) {
-    const { inputPicture } = this.refs;
-
-    inputPicture.click();
     event.stopPropagation();
+
+    const { processing } = this.state;
+    if(processing) return;
+
+    const { inputPicture } = this.refs;
+    inputPicture.click();
   }
 
   render() {
-    const { show_submit, file } = this.state;
+    const { show_submit, processing, file } = this.state;
     const { dispatch, user } = this.props;
     const { handleSubmit, handleFile, selectPicture } = this;
 
@@ -79,7 +97,8 @@ class Form extends React.Component {
         <form onSubmit={handleSubmit}>
           <input type='file' ref='inputPicture' style={{display: 'none'}} onChange={handleFile} />
         </form>
-        {show_submit && <options-option-yellow onClick={handleSubmit}>Upload picture</options-option-yellow>}
+        {processing && <Spinner />}
+        {(show_submit && !processing) && <options-option-yellow onClick={handleSubmit}>Upload picture</options-option-yellow>}
       </options-wrap>
     );
   }

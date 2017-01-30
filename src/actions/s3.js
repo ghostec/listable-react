@@ -24,12 +24,12 @@ export const uploadProfilePicture = (file) => {
         throw new Error("Bad response from server");
       }
       return response.json();
-    }).then((response) => {
+    }).then(response => {
       let formData = new FormData();
       _.forEach(response.fields, (value, key) => formData.append(key, value));
       formData.append('file', file);
 
-      fetch(`https://${config.s3.bucket}.s3.amazonaws.com`, {
+      return fetch(`https://${config.s3.bucket}.s3.amazonaws.com`, {
         method: 'POST',
         body: formData
       }).then(response2 => {
@@ -37,7 +37,7 @@ export const uploadProfilePicture = (file) => {
           throw new Error("Bad response from server");
         }
         dispatch(users.setRawProfilePicture(response.fields.key));
-      })
+      });
     });
   };
 };
