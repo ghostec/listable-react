@@ -2,9 +2,7 @@
 @import 'global';
 
 quick-add-form {
-  width: 100%;
-  position: relative;
-  display: block;
+  @include max-width-container;
 }
 
 quick-add-form form {
