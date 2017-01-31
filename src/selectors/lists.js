@@ -11,7 +11,8 @@ export const getList = state => {
 
 export const getListSize = state => {
   const id = navigation.getResourceId(state);
-  return state.list_items.get(id).size;
+  const list_items = state.list_items.get(id);
+  return list_items && list_items.size;
 }
 
 export const getLists = state => {
