@@ -21,11 +21,13 @@ export default props => {
   const { owner } = item;
 
   return (
-    <options onClick={(event) => toggleOptions(event)}>
-      <options-option-yellow onClick={(event) => goToURL(event, toggleOptions, item)}>Go to URL</options-option-yellow>
-      <options-option>Expand</options-option>
-      {owner && <options-option>Edit</options-option>}
-      {owner && <options-option-red onClick={(event) => removeItem(event, toggleOptions, dispatch, item)}>Remove</options-option-red>}
-    </options>
+    <options-bg onClick={(event) => toggleOptions(event)}>
+      <options>
+        <options-option-yellow onClick={(event) => goToURL(event, toggleOptions, item)}>Go to URL</options-option-yellow>
+        <options-option>Expand</options-option>
+        {owner && <options-option>Edit</options-option>}
+        {owner && <options-option-red onClick={(event) => removeItem(event, toggleOptions, dispatch, item)}>Remove</options-option-red>}
+      </options>
+    </options-bg>
   );
 };

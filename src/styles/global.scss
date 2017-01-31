@@ -9,9 +9,17 @@ $color-gray: #95989A;
 $color-light-gray: #EAEAEA;
 $color-black: #333333;
 
-$mobile: new-breakpoint(max-width 1000px 12);
-
 $images-path: '../../build/images/';
+
+$max-width: 600px;
+
+@mixin max-width-container {
+  display: block;
+  width: 100%;
+  max-width: $max-width;
+  position: relative;
+  margin: 0 auto;
+}
 
 @mixin primary-font($size: 14px, $color: $primary-color, $weight: 400) {
   font-family: 'Lora', serif;

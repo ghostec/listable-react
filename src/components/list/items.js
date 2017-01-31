@@ -39,7 +39,7 @@ const Item = props => {
   const options_component = <Options item={item} toggleOptions={toggleOptions} dispatch={dispatch} />;
 
   return (
-    <li onClick={(event) => toggleOptions(event, options_component)}>
+    <list-item onClick={(event) => toggleOptions(event, options_component)}>
       <list-item-info>
         <list-item-info-left>
           <img src="images/youtube.svg" />
@@ -49,7 +49,7 @@ const Item = props => {
         </list-item-info-right>
       </list-item-info>
       <list-item-name>{item.name}</list-item-name>
-    </li>
+    </list-item>
   );
 };
 
@@ -60,7 +60,7 @@ export default props => {
 
   return (
     <list-items>
-      <ul>{list_items.map((item, k) => <Item key={k} item={item} user_item={user_list_items && user_list_items[item._id]} dispatch={dispatch} toggleOptions={toggleOptions} />)}</ul>
+      {list_items.map((item, k) => <Item key={k} item={item} user_item={user_list_items && user_list_items[item._id]} dispatch={dispatch} toggleOptions={toggleOptions} />)}
     </list-items>
   );
 };

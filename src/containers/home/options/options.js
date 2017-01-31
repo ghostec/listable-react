@@ -14,10 +14,12 @@ class OptionsContainer extends React.Component {
     const { toggleOptions, dispatch } = this.props;
 
     return (
-      <options onClick={(event) => toggleOptions(event)}>
-        <Form />
-        <Options toggleOptions={toggleOptions} dispatch={dispatch} />
-      </options>
+      <options-bg onClick={(event) => toggleOptions(event)}>
+        <options>
+          <Form />
+          <Options toggleOptions={toggleOptions} dispatch={dispatch} />
+        </options>
+      </options-bg>
     );
   }
 }

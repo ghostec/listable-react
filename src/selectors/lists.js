@@ -10,7 +10,8 @@ export const getList = state => {
 }
 
 export const getListSize = state => {
-  return state.list_items.size;
+  const id = navigation.getResourceId(state);
+  return state.list_items.get(id).size;
 }
 
 export const getLists = state => {

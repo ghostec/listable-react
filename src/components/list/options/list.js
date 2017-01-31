@@ -25,13 +25,15 @@ export default props => {
   const { toggleOptions, dispatch, list } = props;
 
   return (
-    <options onClick={(event) => toggleOptions(event)}>
-      <options-option onClick={(event) => togglePublic(event, toggleOptions, dispatch, list)}>
-        Make {list.public ? 'Private' : 'Public'}
-      </options-option>
-      <options-option>Edit</options-option>
-      <options-option-red onClick={(event) => removeList(event, toggleOptions, dispatch, list)}>Remove</options-option-red>
-    </options>
+    <options-bg onClick={(event) => toggleOptions(event)}>
+      <options>
+        <options-option onClick={(event) => togglePublic(event, toggleOptions, dispatch, list)}>
+          Make {list.public ? 'Private' : 'Public'}
+        </options-option>
+        <options-option>Edit</options-option>
+        <options-option-red onClick={(event) => removeList(event, toggleOptions, dispatch, list)}>Remove</options-option-red>
+      </options>
+    </options-bg>
   );
 };
 

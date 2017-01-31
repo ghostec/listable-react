@@ -2,10 +2,9 @@
 @import 'quick_add_form';
 
 home-filters {
-  width: 100%;
+  @include max-width-container;
   margin-top: 10px;
   margin-bottom: 30px;
-  display: block;
   @include secondary-font(16px, $secondary-color);
 
   ul {
@@ -22,11 +21,7 @@ home-filters {
 }
 
 home-lists {
-  @include media($mobile) {
-    @include span-columns(12);
-  }
-  
-  list-style-type: none;
+  @include max-width-container;
 
   li {
     @include row;

@@ -7,7 +7,6 @@ export default (props) => {
         <li className="active">ALL</li>
         <li>DONE</li>
         <li>UNDONE</li>
-        <li>FAVORITES</li>
       </ul>
     </home-filters>
   );
