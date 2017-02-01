@@ -10,8 +10,8 @@ export const navigate = (hash) => {
 
 export const backBegin = default_route => {
   return (dispatch, getState) => {
-    const { name = undefined, options = undefined } = {} || getState().navigation.get('history').peek();
-    const route = default_route || (name && routes.generate(name, options));
+    const { name = undefined, options = undefined } = getState().navigation.get('history').peek() || {};
+    const route = (name && routes.generate(name, options)) || default_route;
     redirect(route);
   };
 };
