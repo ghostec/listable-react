@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import routes from '../../constants/routes';
 import TopBar from '../../components/list/topbar';
 import * as navigation from '../../actions/navigation';
 
@@ -12,7 +13,7 @@ class TopBarContainer extends React.Component {
   }
 
   back() {
-    this.props.dispatch(navigation.backBegin());
+    this.props.dispatch(navigation.backBegin(routes.generate('home')));
   }
 
   render() {
