@@ -42,7 +42,7 @@ const Item = props => {
     <list-item onClick={(event) => toggleOptions(event, options_component)}>
       <list-item-info>
         <list-item-info-left>
-          <img src="images/youtube.svg" />
+          <img src={`images/${item.type}.svg`} />
         </list-item-info-left>
         <list-item-info-right>
           {(user_item && user_item.owner) && <Done user_item={user_item} dispatch={dispatch} />}

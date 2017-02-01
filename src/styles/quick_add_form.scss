@@ -19,6 +19,9 @@ quick-add-form input[type=text] {
   border: none;
   border-bottom: 2px solid $color-light-gray;
   padding: 0 (10px + 24px + 5px + 24px + 10px) 10px 10px;
+  
+  margin-bottom: 15px;
+  &:last-child { margin-bottom: 0; }
 }
 
 quick-add-form input[type=text]:focus {
@@ -35,7 +38,7 @@ quick-add-form input[type=text]:focus {
   border: none;
   cursor: pointer;
   position: absolute;
-  top: 0;
+  bottom: 10px;
   right: 30px;
 }
 
@@ -48,6 +51,6 @@ quick-add-form-close {
   border: none;
   cursor: pointer;
   position: absolute;
-  top: 0;
+  bottom: 10px;
   right: 30px + 24px + 5px;
 }

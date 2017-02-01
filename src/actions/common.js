@@ -17,13 +17,15 @@ export const create = (obj, singular, plural) => {
         token,
         ...obj
       })
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-      return response.json();
     })
-    .then(json => dispatch({ type: `${_.toUpper(plural)}/CREATE`, [_.toLower(singular)]: Immutable.fromJS(json) }));
+    .then(response => response.json())
+    .then(json => {
+      return new Promise((resolve, reject) => {
+        if(json.errors) reject(json.errors);
+        dispatch({ type: `${_.toUpper(plural)}/CREATE`, [_.toLower(singular)]: Immutable.fromJS(json) });
+        resolve(json);
+      });
+    });
   };
 };
 

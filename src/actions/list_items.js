@@ -3,8 +3,16 @@ import Immutable from 'immutable';
 import * as common from './common';
 import { apiPath } from '../helpers/common';
 
-export const create = (list_id, url) => {
-  return common.create({ list_id, url }, 'list_item', 'list_items');
+export const create = (list_id, url, name) => {
+  return dispatch => {
+    return dispatch(common.create({ list_id, url, name }, 'list_item', 'list_items')).then(json => {
+      console.log(json)
+      dispatch({
+        type: 'USER_LIST_ITEMS/CREATE',
+        user_list_item: Immutable.fromJS(json.user_list_item)
+      });
+    });
+  }
 };
 
 export const patch = (list_item, changes) => {
@@ -28,7 +36,7 @@ export const fromList = (list_id) => {
       }
     }).then(response => {
       if (response.status >= 400) {
-        throw new Error("Bad response from server");
+        throw new Error("Bad response from server")
       }
       return response.json();
     })
