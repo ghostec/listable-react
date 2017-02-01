@@ -2,6 +2,7 @@ import Immutable from 'immutable';
 import _ from 'lodash';
 
 import * as common from './common';
+import { signOut } from './session';
 import { apiPath } from '../helpers/common';
 
 export const create = (list) => {
@@ -32,8 +33,7 @@ export const fromUser = (user_id) => {
         throw new Error("Bad response from server");
       }
       return response.json();
-    })
-    .then(lists => {
+    }).then(lists => {
       const normalized = Immutable.fromJS(lists.reduce((obj, list) => {
         obj[list._id] = list;
         return obj;
@@ -44,6 +44,8 @@ export const fromUser = (user_id) => {
       if(!normalized.equals(state_lists)) {
         dispatch({ type: 'LISTS/FROM_USER', lists: normalized });
       }
+    }).catch(err => {
+      if(!user_id) dispatch(signOut);
     }); 
   }
 };

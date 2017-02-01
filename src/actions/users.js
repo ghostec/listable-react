@@ -2,6 +2,7 @@ import Immutable from 'immutable';
 import _ from 'lodash';
 
 import * as common from './common';
+import { signOut } from './session';
 import { apiPath } from '../helpers/common';
 import { rawProfilePicturePath } from '../helpers/s3';
 import { isProfilePictureUpdated, setProfilePictureInDbUser } from '../helpers/users';
@@ -41,8 +42,7 @@ export const get = (user_id) => {
         throw new Error("Bad response from server");
       }
       return response.json();
-    })
-    .then(user => {
+    }).then(user => {
       const state_user = getState().users.get(user._id);
 
       const normalized = Immutable.fromJS(
@@ -56,6 +56,8 @@ export const get = (user_id) => {
           user: normalized
         });
       }
+    }).catch(err => {
+      if(!user_id) dispatch(signOut());
     }); 
   }
 };
