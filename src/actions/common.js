@@ -21,7 +21,7 @@ export const create = (obj, singular, plural) => {
     .then(response => response.json())
     .then(json => {
       return new Promise((resolve, reject) => {
-        if(json.errors) reject(json.errors);
+        if(json.errors) return reject(json.errors);
         dispatch({ type: `${_.toUpper(plural)}/CREATE`, [_.toLower(singular)]: Immutable.fromJS(json) });
         resolve(json);
       });

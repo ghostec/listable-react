@@ -27,9 +27,11 @@ class Form extends React.Component {
     const { name } = this.state;
     const { dispatch, toggleForm } = this.props;
 
-    dispatch(lists.create({ name }));
-
-    toggleForm();
+    dispatch(lists.create({ name }))
+    .then(() => toggleForm())
+    .catch(err => {
+      console.log(err);
+    });
 
     event.preventDefault();
   }
