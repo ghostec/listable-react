@@ -3,11 +3,11 @@ import _ from 'lodash';
 
 import { apiPath } from '../helpers/common';
 
-export const create = (obj, singular, plural) => {
+export const create = (obj, singular, plural, post_url) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${apiPath}/${_.toLower(plural)}`, {
+    return fetch(post_url || `${apiPath}/${_.toLower(plural)}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -18,12 +18,18 @@ export const create = (obj, singular, plural) => {
         ...obj
       })
     })
-    .then(response => response.json())
+    .then(response => {
+      if (response.status != 422 && response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return response.json();
+    })
     .then(json => {
+      console.log(json);
       return new Promise((resolve, reject) => {
         if(json.errors) return reject(json.errors);
         dispatch({ type: `${_.toUpper(plural)}/CREATE`, [_.toLower(singular)]: Immutable.fromJS(json) });
-        resolve(json);
+        return resolve(json);
       });
     });
   };
@@ -58,11 +64,11 @@ export const patch = (obj, changes, singular, plural) => {
   };
 };
 
-export const remove = (obj, singular, plural) => {
+export const remove = (obj, singular, plural, delete_url) => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${apiPath}/${_.toLower(plural)}/${obj._id}`, {
+    return fetch(delete_url || `${apiPath}/${_.toLower(plural)}/${obj._id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',

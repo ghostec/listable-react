@@ -5,8 +5,10 @@ import { apiPath } from '../helpers/common';
 
 export const create = (list_id, url, name) => {
   return dispatch => {
-    return dispatch(common.create({ list_id, url, name }, 'list_item', 'list_items')).then(json => {
-      console.log(json)
+    const post_url = `${apiPath}/lists/${list_id}/list_items`;
+    return dispatch(common.create({
+      list_id, url, name
+    }, 'list_item', 'list_items', post_url)).then(json => {
       dispatch({
         type: 'USER_LIST_ITEMS/CREATE',
         user_list_item: Immutable.fromJS(json.user_list_item)
@@ -20,7 +22,8 @@ export const patch = (list_item, changes) => {
 };
 
 export const remove = (list_item) => {
-  return common.remove(list_item, 'list_item', 'list_items');
+  const delete_url = `${apiPath}/lists/${list_item._listId}/list_items/${list_item._id}`;
+  return common.remove(list_item, 'list_item', 'list_items', delete_url);
 };
 
 export const fromList = (list_id) => {

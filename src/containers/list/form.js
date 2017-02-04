@@ -33,7 +33,7 @@ class Form extends React.Component {
     dispatch(list_items.create(list._id, url, name))
     .then(() => toggleForm())
     .catch(errors => {
-      if(_.find(errors, (error) => error.field.toLowerCase() == 'name')) {
+      if(errors.name) {
         this.setState({
           ...this.state,
           show_name: true
