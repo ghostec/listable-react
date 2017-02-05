@@ -23,6 +23,7 @@ module.exports = {
     publicPath: '/build/'
   },
   resolve: {
+    modules: ['src', 'node_modules'],
     extensions: ['.js', '.scss']
   },
   module: {

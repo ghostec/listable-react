@@ -1,0 +1,27 @@
+@import 'global';
+@import 'topbar';
+
+topbar-center input {
+  $margin: 5px;
+
+  @include secondary-font(20px, $color-gray);
+  @include border-radius(6px);
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  background: $color-light-gray;
+  margin: 0 $margin;
+  border: 0;
+  height: $topbar-height - 2 * $margin;
+  padding: 5px 50px 5px 40px;
+  text-align: center;
+
+  &:focus {
+    @include border-radius(0);
+    @include placeholder {
+      color: transparent;
+    }
+    margin: 0;
+    height: $topbar-height;
+  }
+}

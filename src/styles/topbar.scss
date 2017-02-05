@@ -44,6 +44,7 @@ topbar-content {
 topbar-center {
   @include topbar-base;
   @include secondary-font(24px, $primary-color, 700);
+  width: 100%;
 }
 
 topbar-left {

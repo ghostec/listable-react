@@ -5,6 +5,7 @@ import Auth from '../containers/auth';
 import RedirectTo from '../containers/redirect_to';
 import Home from '../containers/home';
 import List from '../containers/list';
+import Search from '../containers/search';
 
 const RoutesComponents = {
   root: {
@@ -26,6 +27,9 @@ const RoutesComponents = {
   },
   list: {
     component: <List />
+  },
+  search: {
+    component: <Search />
   },
   default: {
     component: <div>default</div>

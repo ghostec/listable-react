@@ -1,10 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
 
-import redirect from '../../helpers/redirect';
+import routes from 'constants/routes';
+import redirect from 'helpers/redirect';
 
 const goToList = list => {
-  redirect(`list/${list._id}`);
+  redirect(routes.generate('list', { id: list._id}));
 }
 
 const List = props => {

@@ -1,8 +1,14 @@
 import React from 'react';
 
-import '../../styles/topbar';
+import 'styles/topbar';
 
-import Options from '../../containers/home/options/options';
+import Options from 'containers/home/options/options';
+import routes from 'constants/routes';
+import redirect from 'helpers/redirect';
+
+const goToSearch = () => {
+  redirect(routes.generate('search'));
+}
 
 export default (props) => {
   const { toggleOptions, dispatch } = props;
@@ -20,7 +26,7 @@ export default (props) => {
             Listable
           </topbar-center>
           <topbar-right>
-            <img src="images/search.svg" />
+            <img src="images/search.svg" onClick={goToSearch} />
           </topbar-right>
         </topbar-content>
       </topbar-wrap>
