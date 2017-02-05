@@ -13,9 +13,13 @@ topbar-center input {
   margin: 0 $margin;
   border: 0;
   height: $topbar-height - 2 * $margin;
-  padding: 5px 50px 5px 40px;
-  text-align: center;
+  padding: 5px 50px;
+  text-align: left;
   transition: all .2s;
+
+  @include placeholder {
+    text-align: center;
+  }
 
   &:focus, &:not(:placeholder-shown) {
     @include border-radius(0);
