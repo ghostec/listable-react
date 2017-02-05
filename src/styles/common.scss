@@ -1,0 +1,22 @@
+@import 'global';
+
+common-lists {
+  @include max-width-container;
+
+  common-lists-list {
+    @include row;
+    @include primary-font(24px, $primary-color, 700);
+    margin-bottom: 20px;
+    text-align: center;
+
+    img {
+      height: 18px;
+      width: auto;
+      margin-left: 10px;
+    }
+
+    &:last-child {
+      margin-bottom: 20px + 20px + 48px;
+    }
+  }
+}

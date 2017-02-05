@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import Lists from '../../components/home/lists';
+import Lists from 'components/common/lists';
 
 class ListsContainer extends React.Component {
   constructor(props) {
@@ -12,13 +12,11 @@ class ListsContainer extends React.Component {
   render() {
     const { lists } = this.props;
 
-    if(_.isEmpty(lists)) return <div>loading...</div>;
-    
     return <Lists lists={lists} />; 
   }
 };
 
-import { getLists } from '../../selectors/lists';
+import { getLists } from 'selectors/lists';
 
 const mapStateToProps = state => {
   return {

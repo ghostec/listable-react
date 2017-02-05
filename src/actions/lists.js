@@ -66,8 +66,7 @@ export const get = (list_id) => {
         throw new Error("Bad response from server");
       }
       return response.json();
-    })
-    .then(list => {
+    }).then(list => {
       const normalized = Immutable.fromJS(list);
       const state_list = getState().lists.get(normalized.get('_id'));
 
@@ -77,3 +76,23 @@ export const get = (list_id) => {
     }); 
   }
 };
+
+export const search = (v) => {
+  return (dispatch, getState) => {
+    const token = getState().session.get('token');
+
+    return fetch(`${apiPath}/lists/search?v=${escape(v)}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      }
+    }).then(response => {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return response.json();
+    });
+  }
+}

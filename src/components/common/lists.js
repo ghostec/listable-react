@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
+import 'styles/common';
+
 import routes from 'constants/routes';
 import redirect from 'helpers/redirect';
 
@@ -12,10 +14,10 @@ const List = props => {
   const { list } = props;
 
   return (
-    <li onClick={() => goToList(list)}>
+    <common-lists-list onClick={() => goToList(list)}>
       {list.name}
       {!list.public && <img src="images/padlock.svg" />}
-    </li>
+    </common-lists-list>
   );
 }
 
@@ -29,8 +31,8 @@ export default props => {
   });
 
   return (
-    <home-lists>
+    <common-lists>
       {lists_lis}
-    </home-lists>
+    </common-lists>
   );
 }

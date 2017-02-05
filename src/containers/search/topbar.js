@@ -2,7 +2,30 @@ import React from 'react';
 
 import routes from 'constants/routes';
 import * as navigation from 'actions/navigation';
-import TopBar from 'components/search/topbar';
+import TopBar from 'components/common/topbar';
+import Form from 'containers/search/form';
+
+const Left = props => {
+  const { back } = props;
+
+  return (
+    <img src="images/back_gray.svg" onClick={back} />
+  );
+}
+
+const Center = props => {
+  const { search } = props;
+
+  return (
+    <Form search={search} />
+  );
+}
+
+const Right = props => {
+  return (
+    <img src="images/search_gray.svg" />
+  );
+}
 
 class TopBarContainer extends React.Component {
   constructor(props) {
@@ -17,8 +40,11 @@ class TopBarContainer extends React.Component {
 
   render() {
     const { back } = this;
+    const { search } = this.props;
 
-    return <TopBar back={back} />
+    return <TopBar left={<Left back={back} />}
+              center={<Center search={search} />}
+              right={<Right />} />
   }
 };
 
