@@ -86,3 +86,11 @@ input:-webkit-autofill {
   cursor: pointer;
   @include filter(drop-shadow(1px 3px 6px rgba(0, 0, 0, 0.25)));
 }
+
+@mixin vertical-spacing($height) {
+  display: block;
+  height: $height;
+}
+
+vertical-10px { @include vertical-spacing(10px); }
+vertical-20px { @include vertical-spacing(20px); }
