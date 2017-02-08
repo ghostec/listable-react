@@ -7,6 +7,7 @@ import navigation from './navigation';
 import storage from './storage';
 import session from './session';
 import lists from './lists';
+import user_lists from './user_lists';
 import list_items from './list_items';
 import user_list_items from './user_list_items';
 import users from './users';
@@ -16,6 +17,7 @@ const appReducer = combineReducers({
   storage,
   session,
   lists,
+  user_lists,
   list_items,
   user_list_items,
   users

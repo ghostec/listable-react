@@ -94,7 +94,7 @@ class Form extends React.Component {
     return (
       <options-wrap>
         <upload-profile-picture onClick={selectPicture}>
-          <img ref={'userPicture'} src={isEmpty(user.picture) ? 'images/upload-profile-picture.svg' : profilePicturePath(user, 'medium')} />
+          <img ref={'userPicture'} src={isEmpty(user && user.picture) ? 'images/upload-profile-picture.svg' : profilePicturePath(user, 'medium')} />
         </upload-profile-picture>
         <form onSubmit={handleSubmit}>
           <input type='file' ref='inputPicture' style={{display: 'none'}} onChange={handleFile} />

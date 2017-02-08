@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import * as common from './common';
 import { signOut } from './session';
-import { apiPath } from '../helpers/common';
+import { apiPath } from 'helpers/common';
 
 export const create = (list) => {
   return common.create(list, 'list', 'lists');
@@ -33,16 +33,28 @@ export const fromUser = (user_id) => {
         throw new Error("Bad response from server");
       }
       return response.json();
-    }).then(lists => {
+    }).then(({ lists, users }) => {
       const normalized = Immutable.fromJS(lists.reduce((obj, list) => {
         obj[list._id] = list;
         return obj;
       }, {}));
 
-      const state_lists = getState().lists;
+      const user_lists = lists.map(list => list._id.toString());
+
+      const state_lists = getState().lists.filter(list => {
+        return _.find(user_lists, el => el == list.get('_id').toString());
+      });
 
       if(!normalized.equals(state_lists)) {
-        dispatch({ type: 'LISTS/FROM_USER', lists: normalized });
+        dispatch({ type: 'LISTS/BATCH', lists: normalized });
+        dispatch({ type: 'USER_LISTS/FROM_USER', user_id, lists: Immutable.List(user_lists) });
+
+        const users_normalized = Immutable.fromJS(users.reduce((obj, user) => {
+          obj[user._id] = user;
+          return obj;
+        }, {}));
+
+        dispatch({ type: 'USERS/BATCH', users: users_normalized });
       }
     }).catch(err => {
       if(!user_id) dispatch(signOut);
