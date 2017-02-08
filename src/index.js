@@ -36,7 +36,7 @@ const App = (props) => {
   const location = props.navigation.get('location');
   const token = props.session.get('token', undefined);
 
-  let route = RoutesComponents[location.name] || RoutesComponents.default;
+  let route = (location && RoutesComponents[location.name]) || RoutesComponents.default;
   if(token == undefined && route.public != true) {
     route = RoutesComponents.redirect('auth');
   }

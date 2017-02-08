@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import update from 'react-addons-update';
 import { bindAll, isEmpty } from 'lodash';
 
-import Spinner from '../../../components/common/spinner';
-import * as common from '../../../helpers/common';
-import { profilePicturePath } from '../../../helpers/s3';
-import { getCurrentUser } from '../../../selectors/users';
-import * as s3 from '../../../actions/s3';
+import Spinner from 'components/common/spinner';
+import * as common from 'helpers/common';
+import { profilePicturePath } from 'helpers/s3';
+import * as s3 from 'actions/s3';
+import * as users from 'actions/users';
 
 class Form extends React.Component {
   constructor(props) {
@@ -22,14 +22,16 @@ class Form extends React.Component {
   }
 
   componentDidMount() {
-    const { inputPicture } = this.refs;
+    const { user_id, dispatch } = this.props;
+    dispatch(users.get(user_id));
 
+    const { inputPicture } = this.refs;
     inputPicture.addEventListener('click', event => event.stopPropagation());
   }
 
   componentWillUnmount() {
     const { inputPicture } = this.refs;
-
+    
     inputPicture.removeEventListener('click', event => event.stopPropagation());
   }
 
@@ -104,10 +106,12 @@ class Form extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+import { getCurrentUser } from 'selectors/users';
+import { getUserId } from 'selectors/session';
+
+export default connect(state => {
   return {
+    user_id: getUserId(state),
     user: getCurrentUser(state)
   };
-}
-
-export default connect(mapStateToProps)(Form);
+})(Form);

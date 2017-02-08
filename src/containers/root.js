@@ -6,9 +6,14 @@ import RedirectTo from './redirect_to';
 import * as session from '../actions/session';
 
 const Root = (props) => {
-    const token = props.session.get('token');
-    return <RedirectTo location={token != undefined ? 'home' : 'auth'} />;
+    const { token } = props;
+    console.log(token);
+    return <RedirectTo location={token ? 'home' : 'auth'} />;
 }
 
-export default connect(state => state)(Root);
+export default connect(state => {
+  return {
+    token: state.session.get('token')
+  };
+})(Root);
 

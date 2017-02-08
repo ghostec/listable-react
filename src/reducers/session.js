@@ -7,8 +7,6 @@ export default (state = initialState, action) => {
     case 'SESSION/SET_TOKEN':
       const { type, ...data } = action;
       return Immutable.fromJS(data);
-    case 'SESSION/DISCARD_TOKEN':
-      return Immutable.Map();
     default:
       return state;
   }

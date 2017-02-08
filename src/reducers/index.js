@@ -11,7 +11,7 @@ import list_items from './list_items';
 import user_list_items from './user_list_items';
 import users from './users';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   navigation,
   storage,
   session,
@@ -20,6 +20,15 @@ const rootReducer = combineReducers({
   user_list_items,
   users
 });
+
+const rootReducer = (state, action) => {
+  if(action.type == 'SESSION/DISCARD_TOKEN') {
+    const { storage } = state;
+    state = { storage  };
+  }
+
+  return appReducer(state, action);
+}
 
 const store = compose(applyMiddleware(thunk))(createStore)(rootReducer, undefined, autoRehydrate());
 persistStore(store, {
