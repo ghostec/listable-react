@@ -12,5 +12,5 @@ export const getUsers = state => {
 }
 
 export const getUser = (state, user_id) => {
-  return user_id && state.users && state.users.get(user_id).toJS();
+  return user_id && state.users && state.users.get(user_id) && state.users.get(user_id).toJS();
 }

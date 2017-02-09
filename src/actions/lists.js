@@ -6,7 +6,15 @@ import { signOut } from './session';
 import { apiPath } from 'helpers/common';
 
 export const create = (list) => {
-  return common.create(list, 'list', 'lists');
+  return dispatch => {
+    return dispatch(common.create(list, 'list', 'lists')).then(list => {
+      dispatch({
+        type: 'USER_LISTS/CREATE',
+        user_id: list._userId,
+        list_id: list._id
+      });
+    });
+  }
 };
 
 export const patch = (list, changes) => {
@@ -14,7 +22,15 @@ export const patch = (list, changes) => {
 };
 
 export const remove = (list) => {
-  return common.remove(list, 'list', 'lists');
+  return dispatch => {
+    return dispatch(common.remove(list, 'list', 'lists')).then(() => {
+      dispatch({
+        type: 'USER_LISTS/CREATE',
+        user_id: list._userId,
+        list_id: list._id
+      }); 
+    });
+  }
 };
 
 export const fromUser = (user_id) => {
@@ -62,7 +78,7 @@ export const fromUser = (user_id) => {
   }
 };
 
-export const get = (list_id) => {
+export const get = list_id => {
   return (dispatch, getState) => {
     const token = getState().session.get('token');
 
@@ -88,6 +104,29 @@ export const get = (list_id) => {
     }); 
   }
 };
+
+export const save = list_id => {
+  return (dispatch, getState) => {
+    const token = getState().session.get('token');
+
+    return fetch(`${apiPath}/lists/${list_id}/save`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      }
+    }).then(response => {
+      if(response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      else if(response.status == 204) {
+        const user_id = getState().session.get('user_id');
+        dispatch({ type: 'USER_LISTS/CREATE', user_id, list_id })
+      }
+    });
+  }
+}
 
 export const search = (v) => {
   return (dispatch, getState) => {

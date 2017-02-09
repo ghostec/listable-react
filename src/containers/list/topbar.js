@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import routes from 'constants/routes';
 import TopBar from 'components/common/topbar';
 import * as navigation from 'actions/navigation';
+import * as lists from 'actions/lists';
 
 const Left = props => {
   const { dispatch } = props;
@@ -16,11 +17,15 @@ const Left = props => {
 }
 
 const Center = props => {
+  const { dispatch, list, is_saved } = props;
+
   return (
-    <list-topbar-save>
+    <div>
+    {(!is_saved && !list.owner) && <list-topbar-save onClick={() => dispatch(lists.save(list._id))} >
       <img id="list-topbar-save-ring" src="images/open-ring-blue.svg" />
       <list-topbar-text>save</list-topbar-text>
-    </list-topbar-save>
+    </list-topbar-save>}
+    </div>
   );
 }
 
@@ -38,12 +43,21 @@ class TopBarContainer extends React.Component {
   }
 
   render() {
-    const { n_items, dispatch } = this.props;
+    const { list, n_items, is_saved, dispatch } = this.props;
 
     return <TopBar left={<Left dispatch={dispatch} />}
-              center={<Center />}
+              center={<Center dispatch={dispatch} list={list} is_saved={is_saved} />}
               right={<Right n_items={n_items} />} />
   }
 };
 
-export default connect()(TopBarContainer);
+import { getUserId } from 'selectors/session';
+import { getList, getListSize, isSaved } from 'selectors/lists';
+
+export default connect(state => {
+  return {
+    list: getList(state),
+    n_items: getListSize(state),
+    is_saved: isSaved(state)
+  }
+})(TopBarContainer);

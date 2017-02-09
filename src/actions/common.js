@@ -25,7 +25,6 @@ export const create = (obj, singular, plural, post_url) => {
       return response.json();
     })
     .then(json => {
-      console.log(json);
       return new Promise((resolve, reject) => {
         if(json.errors) return reject(json.errors);
         dispatch({ type: `${_.toUpper(plural)}/CREATE`, [_.toLower(singular)]: Immutable.fromJS(json) });

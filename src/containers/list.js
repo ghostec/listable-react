@@ -43,26 +43,26 @@ class List extends React.Component {
   }
 
   componentDidMount() {
-    const { list_id, user_id, dispatch } = this.props;
+    const { list_id, list, dispatch } = this.props;
     dispatch(lists.get(list_id));
-    dispatch(users.get(user_id));
     dispatch(list_items.fromList(list_id));
     dispatch(user_list_items.fromList(list_id));
+    list && dispatch(users.get(list._userId));
   }
   
   render() {
     const { toggleForm, toggleOptions } = this;
     const { show_form, options_component } = this.state;
-    const { user, list, n_items, dispatch } = this.props;
+    const { owner, list, n_items, dispatch } = this.props;
 
     if(_.isEmpty(list)) return (<div>loading...</div>);
     
     return (
       <list>
         {options_component}
-        <TopBar n_items={n_items} />
+        <TopBar />
         <vertical-20px />
-        <ListInfo list={list} user={(user._id != list._userId) && user} onClickHandler={event => listClickHandler(event, {
+        <ListInfo list={list} user={!list.owner && owner} onClickHandler={event => listClickHandler(event, {
           dispatch, toggleOptions, list
         })}/>
         {show_form && <Form list={list} toggleForm={toggleForm} />}
@@ -87,11 +87,9 @@ import { getUser } from 'selectors/users';
 export default connect(state => {
   return {
     list_id: getResourceId(state),
-    user_id: getUserId(state),
     list: getList(state),
-    n_items: getListSize(state),
     init: function() {
-      this.user = getUser(state, this.list && this.list._userId);
+      this.owner = getUser(state, this.list && this.list._userId);
       return this;
     }
   }.init();

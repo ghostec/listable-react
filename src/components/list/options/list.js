@@ -1,9 +1,9 @@
 import React from 'react';
 
-import '../../../styles/options';
+import 'styles/options';
 
-import * as lists from '../../../actions/lists';
-import * as navigation from '../../../actions/navigation';
+import * as lists from 'actions/lists';
+import * as navigation from 'actions/navigation';
 
 const togglePublic = (event, toggleOptions, dispatch, list) => {
   toggleOptions();

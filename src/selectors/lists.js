@@ -21,7 +21,16 @@ export const getLists = (state, user_id) => {
 
   const user_lists = state.user_lists && state.user_lists.get(user_id, Immutable.List()).toJS();
 
-  const lists = user_lists.map(list_id => state.lists.get(list_id).toJS());
+  const lists = user_lists.map(list_id => {
+    return state.lists.get(list_id) && state.lists.get(list_id).toJS();
+  }).filter(list => !!list);
 
   return lists.sort((a, b) => (a.sort_date < b.sort_date ? 1 : -1));
+}
+
+export const isSaved = state => {
+  const user_id = getUserId(state);
+  const list_id = getResourceId(state);
+
+  return !!state.user_lists.get(user_id).find(el => el == list_id);
 }
