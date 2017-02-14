@@ -2,6 +2,7 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 
 import Options from './options/list_item';
+import Empty from 'components/common/empty';
 import { patch as patchUserListItem } from 'actions/user_list_items';
 
 const toggleDone = (event, dispatch, user_item) => {
@@ -56,7 +57,7 @@ const Item = props => {
 export default props => {
   const { list_items, user_list_items, dispatch, toggleOptions } = props;
 
-  if(_.isEmpty(list_items)) return <div>loading...</div>;
+  if(_.isEmpty(list_items)) return <Empty />;
 
   return (
     <list-items>

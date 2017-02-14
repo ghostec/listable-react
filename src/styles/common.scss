@@ -35,9 +35,21 @@ common-list-info {
     }
   }
 
-
-
   &:last-child {
     margin-bottom: 20px + 20px + 48px;
+  }
+}
+
+common-empty {
+  @include primary-font(24px);
+  color: $color-light-gray;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+
+  img {
+    height: 24px;
+    width: auto;
+    margin-right: 10px;
   }
 }

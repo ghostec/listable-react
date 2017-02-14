@@ -55,8 +55,6 @@ class List extends React.Component {
     const { show_form, options_component } = this.state;
     const { owner, list, n_items, dispatch } = this.props;
 
-    if(_.isEmpty(list)) return (<div>loading...</div>);
-    
     return (
       <list>
         {options_component}
