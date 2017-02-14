@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../styles/spinner';
+import 'styles/spinner';
 
 export default props => {
   return (

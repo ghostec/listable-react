@@ -1,11 +1,11 @@
 import React from 'react';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import Options from './options/list_item';
-import * as user_list_items from '../../actions/user_list_items';
+import { patch as patchUserListItem } from 'actions/user_list_items';
 
 const toggleDone = (event, dispatch, user_item) => {
-  dispatch(user_list_items.patch(user_item, {
+  dispatch(patchUserListItem(user_item, {
     done: !user_item.done
   }));
   event.stopPropagation();
@@ -14,7 +14,7 @@ const toggleDone = (event, dispatch, user_item) => {
 const Done = props => {
   const { user_item, dispatch } = props;
 
-  if(_.isEmpty(user_item)) return <div>loading...</div>;
+  if(isEmpty(user_item)) return <div>loading...</div>;
 
   const { done } = user_item;
 

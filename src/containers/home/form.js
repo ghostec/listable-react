@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import update from 'react-addons-update';
 
-import * as lists from '../../actions/lists';
+import { create as createList } from 'actions/lists';
 
 class Form extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class Form extends React.Component {
     const { name } = this.state;
     const { dispatch, toggleForm } = this.props;
 
-    dispatch(lists.create({ name }))
+    dispatch(createList({ name }))
     .then(() => toggleForm())
     .catch(err => {
       console.log(err);

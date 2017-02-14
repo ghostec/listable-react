@@ -1,11 +1,11 @@
 import React from 'react';
 
-import '../../styles/options';
+import 'styles/options';
 
-import * as session from '../../actions/session';
+import { sessionSignOut } from 'actions/session';
 
 const signOut = (event, toggleOptions, dispatch) => {
-  dispatch(session.signOut());
+  dispatch(sessionSignOut());
 }
 
 export default props => {
