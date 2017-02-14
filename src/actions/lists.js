@@ -50,7 +50,7 @@ export const fromUser = (user_id) => {
       }
       return response.json();
     }).then(({ lists, users }) => {
-      const normalized = Immutable.fromJS(lists.reduce((obj, list) => {
+      const lists_normalized = Immutable.fromJS(lists.reduce((obj, list) => {
         obj[list._id] = list;
         return obj;
       }, {}));
@@ -61,15 +61,24 @@ export const fromUser = (user_id) => {
         return _.find(user_lists, el => el == list.get('_id').toString());
       });
 
-      if(!normalized.equals(state_lists)) {
-        dispatch({ type: 'LISTS/BATCH', lists: normalized });
+      if(!lists_normalized.equals(state_lists)) {
+        dispatch({ type: 'LISTS/BATCH', lists: lists_normalized });
         dispatch({ type: 'USER_LISTS/FROM_USER', user_id, lists: Immutable.List(user_lists) });
 
-        const users_normalized = Immutable.fromJS(users.reduce((obj, user) => {
-          obj[user._id] = user;
-          return obj;
-        }, {}));
+        
+        dispatch({ type: 'USERS/BATCH', users: users_normalized });
+      }
 
+      const users_normalized = Immutable.fromJS(users.reduce((obj, user) => {
+        obj[user._id] = user;
+        return obj;
+      }, {}));
+
+      const state_users = getState().users.filter(user => {
+        return _.find(users, el => el._id.toString() == user.get('_id').toString());
+      });
+
+      if(!users_normalized.equals(state_users)) {
         dispatch({ type: 'USERS/BATCH', users: users_normalized });
       }
     }).catch(err => {

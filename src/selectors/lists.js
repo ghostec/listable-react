@@ -19,13 +19,14 @@ export const getListSize = state => {
 export const getLists = (state, user_id) => {
   if(!user_id) user_id = getUserId(state);
 
-  const user_lists = state.user_lists && state.user_lists.get(user_id, Immutable.List()).toJS();
+  const user_lists_imm = state.user_lists && state.user_lists.get(user_id, undefined);
+  const user_lists = user_lists_imm && user_lists_imm.toJS();
 
-  const lists = user_lists.map(list_id => {
+  const lists = user_lists && user_lists.map(list_id => {
     return state.lists.get(list_id) && state.lists.get(list_id).toJS();
   }).filter(list => !!list);
 
-  return lists.sort((a, b) => (a.sort_date < b.sort_date ? 1 : -1));
+  return lists && lists.sort((a, b) => (a.sort_date < b.sort_date ? 1 : -1));
 }
 
 export const isSaved = state => {

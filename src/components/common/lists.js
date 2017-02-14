@@ -7,6 +7,7 @@ import routes from 'constants/routes';
 import redirect from 'helpers/redirect';
 import ListInfo from 'components/common/list_info';
 import Empty from 'components/common/empty';
+import Spinner from 'components/common/spinner';
 
 const goToList = list => {
   redirect(routes.generate('list', { id: list._id}));
@@ -15,6 +16,7 @@ const goToList = list => {
 export default props => {
   const { lists, users, user_id } = props;
 
+  if(!lists) return <Spinner />;
   if(isEmpty(lists) || isEmpty(users)) return <Empty />;
 
   const Lists = lists.map((list, k) => {

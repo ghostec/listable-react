@@ -2,7 +2,7 @@ import React from 'react';
 
 import 'styles/options';
 
-import { sessionSignOut } from 'actions/session';
+import { signOut as sessionSignOut } from 'actions/session';
 
 const signOut = (event, toggleOptions, dispatch) => {
   dispatch(sessionSignOut());

@@ -3,6 +3,7 @@ import { isEmpty } from 'lodash';
 
 import Options from './options/list_item';
 import Empty from 'components/common/empty';
+import Spinner from 'components/common/spinner';
 import { patch as patchUserListItem } from 'actions/user_list_items';
 
 const toggleDone = (event, dispatch, user_item) => {
@@ -57,6 +58,7 @@ const Item = props => {
 export default props => {
   const { list_items, user_list_items, dispatch, toggleOptions } = props;
 
+  if(!list_items) return <Spinner />;
   if(_.isEmpty(list_items)) return <Empty />;
 
   return (

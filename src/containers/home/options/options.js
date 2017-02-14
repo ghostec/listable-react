@@ -1,9 +1,9 @@
 import React from 'react';
 
-import '../../../styles/options';
+import 'styles/options';
 
 import Form from './form';
-import Options from '../../../components/home/options';
+import Options from 'components/home/options';
 
 class OptionsContainer extends React.Component {
   constructor(props) {
