@@ -60,28 +60,43 @@ export const patch = (obj, changes, singular, plural) => {
         type: `${_.toUpper(plural)}/PATCH`, [_.toLower(singular)]: patched
       }); 
     });
-  };
-};
+  }
+}
 
-export const remove = (obj, singular, plural, delete_url) => {
-  return (dispatch, getState) => {
+export const removeRemote = (obj, singular, plural, delete_url) => {
+  return async (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(delete_url || `${apiPath}/${_.toLower(plural)}/${obj._id}`, {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'x-access-token': token
-      }
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
+    try {
+      let response = await fetch(delete_url || `${apiPath}/${_.toLower(plural)}/${obj._id}`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        }
+      });
 
-      dispatch({
-        type: `${_.toUpper(plural)}/DELETE`, [_.toLower(singular)]: Immutable.fromJS(obj)
-      }); 
-    });
-  };
-};
+      if (response.status >= 400) throw new Error("Bad response from server");
+
+      return response;
+    } catch(err) {
+      console.log(err);
+    }
+  }
+}
+
+export const remove = (obj, singular, plural, delete_url) => async dispatch => {
+  try {
+    await removeRemote(obj, singular, plural, delete_url);
+    dispatch(afterRemove(obj, singular, plural, delete_url)); 
+  } catch(err) {
+    console.log(err);
+  }
+}
+
+export const afterRemove = (obj, singular, plural) => {
+  return ({
+    type: `${_.toUpper(plural)}/DELETE`, [_.toLower(singular)]: Immutable.fromJS(obj)
+  });
+}

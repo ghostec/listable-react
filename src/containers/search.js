@@ -6,14 +6,14 @@ import 'styles/search';
 
 import TopBar from 'containers/search/topbar';
 import Lists from 'components/common/lists';
-import * as lists from 'actions/lists';
+import { search as searchLists } from 'actions/lists';
 
 class Search extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      results: null
+      results: {}
     };
 
     bindAll(this, 'search');
@@ -22,12 +22,21 @@ class Search extends React.Component {
   search(v) {
     const { dispatch } = this.props;
 
-    dispatch(lists.search(v)).then(results => {
+    dispatch(searchLists(v)).then(results => {
+      results.users = results.users.reduce((obj, user) => {
+        obj[user._id] = user;
+        return obj;
+      }, {});
+
       this.setState({
         ...this.state,
         results
       });
     });
+  }
+
+  componentDidMount() {
+    this.search('');
   }
   
   render() {
@@ -38,7 +47,8 @@ class Search extends React.Component {
     return (
       <search>
         <TopBar dispatch={dispatch} search={search} />
-        <Lists lists={results} />
+        <vertical-20px />
+        <Lists lists={results && results.lists} users={results && results.users} />
       </search>
     );
   }

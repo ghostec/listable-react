@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 import _ from 'lodash';
+import { batchActions } from 'redux-batched-actions';
 
 import * as common from './common';
 import { signOut } from './session';
@@ -21,15 +22,20 @@ export const patch = (list, changes) => {
   return common.patch(list, changes, 'list', 'lists');
 };
 
-export const remove = (list) => {
-  return dispatch => {
-    return dispatch(common.remove(list, 'list', 'lists')).then(() => {
-      dispatch({
-        type: 'USER_LISTS/CREATE',
+export const remove = list => async dispatch => {
+  try {
+    await dispatch(common.removeRemote(list, 'list', 'lists'));
+
+    return dispatch(batchActions([
+      common.afterRemove(list, 'list', 'lists'),
+      {
+        type: 'USER_LISTS/DELETE',
         user_id: list._userId,
         list_id: list._id
-      }); 
-    });
+      }
+    ]));
+  } catch(err) {
+    console.log(err);
   }
 };
 
@@ -65,7 +71,7 @@ export const fromUser = (user_id) => {
         dispatch({ type: 'LISTS/BATCH', lists: lists_normalized });
         dispatch({ type: 'USER_LISTS/FROM_USER', user_id, lists: Immutable.List(user_lists) });
 
-        
+
         dispatch({ type: 'USERS/BATCH', users: users_normalized });
       }
 

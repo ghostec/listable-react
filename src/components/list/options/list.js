@@ -2,23 +2,26 @@ import React from 'react';
 
 import 'styles/options';
 
-import * as lists from 'actions/lists';
-import * as navigation from 'actions/navigation';
+import { patch as patchList, remove as removeList } from 'actions/lists';
+import { backBegin as navigationBack } from 'actions/navigation';
 
-const togglePublic = (event, toggleOptions, dispatch, list) => {
+const optionTogglePublic = (event, toggleOptions, dispatch, list) => {
   toggleOptions();
-  dispatch(lists.patch(list, {
+  dispatch(patchList(list, {
     public: !list.public
   }));
   event.stopPropagation();
 }
 
-const removeList = (event, toggleOptions, dispatch, list) => {
-  toggleOptions();
-  dispatch(lists.remove(list)).then(() => {
-    dispatch(navigation.backBegin());
-  });
+const optionRemoveList = async (event, toggleOptions, dispatch, list) => {
   event.stopPropagation();
+  toggleOptions();
+  try {
+    await dispatch(removeList(list));
+    dispatch(navigationBack());
+  } catch(err) {
+    console.log(err)
+  }
 }
 
 export default props => {
@@ -27,11 +30,11 @@ export default props => {
   return (
     <options-bg onClick={(event) => toggleOptions(event)}>
       <options>
-        <options-option onClick={(event) => togglePublic(event, toggleOptions, dispatch, list)}>
+        <options-option onClick={(event) => optionTogglePublic(event, toggleOptions, dispatch, list)}>
           Make {list.public ? 'Private' : 'Public'}
         </options-option>
         <options-option>Edit</options-option>
-        <options-option-red onClick={(event) => removeList(event, toggleOptions, dispatch, list)}>Remove</options-option-red>
+        <options-option-red onClick={(event) => optionRemoveList(event, toggleOptions, dispatch, list)}>Remove</options-option-red>
       </options>
     </options-bg>
   );

@@ -2,6 +2,7 @@ import {applyMiddleware, createStore, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import {persistStore, autoRehydrate} from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
+import {enableBatching} from 'redux-batched-actions';
 
 import navigation from './navigation';
 import storage from './storage';
@@ -32,7 +33,7 @@ const rootReducer = (state, action) => {
   return appReducer(state, action);
 }
 
-const store = compose(applyMiddleware(thunk))(createStore)(rootReducer, undefined, autoRehydrate());
+const store = compose(applyMiddleware(thunk))(createStore)(enableBatching(rootReducer), undefined, autoRehydrate());
 persistStore(store, {
   blacklist: ['navigation'],
   transforms: [immutableTransform()]

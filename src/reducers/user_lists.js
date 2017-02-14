@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
       current_list = state.get(action.user_id, Immutable.List());
       new_list = current_list.push(action.list_id);
       return state.set(action.user_id, new_list);
-    case 'USER_LISTS/REMOVE':
+    case 'USER_LISTS/DELETE':
       current_list = state.get(action.user_id, Immutable.List());
       index = current_list.indexOf(action.list_id);
       new_list = index != -1 ? current_list.delete(index) : current_list;

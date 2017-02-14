@@ -14,6 +14,7 @@ import TopBar from './list/topbar';
 import Options from 'components/list/options/list';
 import AddButton from 'components/common/add_button';
 import ListInfo from 'components/common/list_info';
+import Spinner from 'components/common/spinner';
 
 class List extends React.Component {
   constructor(props) {
@@ -54,6 +55,8 @@ class List extends React.Component {
     const { toggleForm, toggleOptions } = this;
     const { show_form, options_component } = this.state;
     const { owner, list, n_items, dispatch } = this.props;
+
+    if(!list) return <Spinner />;
 
     return (
       <list>
