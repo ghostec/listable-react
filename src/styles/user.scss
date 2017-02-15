@@ -1,0 +1,16 @@
+@import 'global';
+
+user-topbar-center {
+  @include secondary-font(24px, $color-black, 400);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+
+  img {
+    @include border-radius(50%);
+    height: 24px;
+    width: auto;
+    margin-right: 10px;
+  }
+}

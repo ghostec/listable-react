@@ -1,5 +1,5 @@
 const dev = {
-  apiURL: '//192.168.1.3:3000/api',
+  apiURL: '//192.168.1.2:3000/api',
   apiVersion: 'v1',
   s3: {
     bucket: 'listable-dev',
