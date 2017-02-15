@@ -9,11 +9,10 @@ import * as users from 'actions/users';
 import * as list_items from 'actions/list_items';
 import * as user_list_items from 'actions/user_list_items';
 import Items from './list/items';
-import Form from './list/form';
+import Form from './list/form/create_list_item';
 import TopBar from './list/topbar';
-import Options from 'components/list/options/list';
 import AddButton from 'components/common/add_button';
-import ListInfo from 'components/common/list_info';
+import ListInfo from 'containers/list/list_info';
 import Spinner from 'components/common/spinner';
 
 class List extends React.Component {
@@ -63,9 +62,7 @@ class List extends React.Component {
         {options_component}
         <TopBar />
         <vertical-20px />
-        <ListInfo list={list} user={!list.owner && owner} onClickHandler={event => listClickHandler(event, {
-          dispatch, toggleOptions, list
-        })}/>
+        <ListInfo list={list} user={!list.owner && owner} toggleOptions={toggleOptions} />
         {show_form && <Form list={list} toggleForm={toggleForm} />}
         <Items toggleOptions={toggleOptions}/>
         {(list.owner && !show_form) && <AddButton toggleForm={toggleForm} />}
@@ -73,12 +70,6 @@ class List extends React.Component {
     );
   }
 };
-
-const listClickHandler = (event, props) => {
-  const { dispatch, toggleOptions, list } = props;
-  const OptionsComponent = <Options toggleOptions={toggleOptions} dispatch={dispatch} list={list} />;
-  toggleOptions(event, OptionsComponent);
-}
 
 import { getList, getListSize } from 'selectors/lists';
 import { getResourceId } from 'selectors/navigation';

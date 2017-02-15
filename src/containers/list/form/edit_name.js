@@ -3,20 +3,17 @@ import { connect } from 'react-redux';
 import update from 'react-addons-update';
 import _ from 'lodash';
 
-import * as list_items from '../../actions/list_items';
+import { patch as patchList } from 'actions/lists';
 
 class Form extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      url: '',
-      name: '',
-      show_name: false
+      name: props.list.name,
     }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    _.bindAll(this, 'handleChange', 'handleSubmit');
   }
 
   handleChange(event) {
@@ -27,33 +24,27 @@ class Form extends React.Component {
   }
 
   handleSubmit(event) {
-    const { url, name } = this.state;
+    const { name } = this.state;
     const { dispatch, list, toggleForm } = this.props;
 
-    dispatch(list_items.create(list._id, url, name))
+    dispatch(patchList(list, { name }))
     .then(() => toggleForm())
     .catch(errors => {
-      if(errors.name) {
-        this.setState({
-          ...this.state,
-          show_name: true
-        });
-      }
+      console.log(errors);
     });
 
     event.preventDefault();
   }
 
   render() {
-    const { url, name, show_name } = this.state;
+    const { name } = this.state;
     const { dispatch, toggleForm } = this.props;
     const { handleSubmit, handleChange } = this;
 
     return (
       <quick-add-form>
       <form onSubmit={handleSubmit}>
-      {show_name && <input id="name" type="text" placeholder="Item name" value={name} onChange={handleChange} />}
-      <input id="url" type="text" placeholder="paste URL" value={url} onChange={handleChange} />
+      <input id="name" type="text" placeholder={name} value={name} onChange={handleChange} />
       <quick-add-form-close onClick={toggleForm}/>
       <input id="quick-add-form-submit" type="submit" value="" />
       </form>

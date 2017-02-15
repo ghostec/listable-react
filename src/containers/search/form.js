@@ -29,7 +29,7 @@ class Form extends React.Component {
     const { handleChange } = this;
 
     return (
-      <input id="search" type="text" placeholder="Search" value={search} onChange={handleChange} /> 
+      <input id="search" type="text" placeholder="Search" autoComplete="off" value={search} onChange={handleChange} /> 
     );
   }
 }

@@ -24,8 +24,14 @@ const optionRemoveList = async (event, toggleOptions, dispatch, list) => {
   }
 }
 
+const optionEditList = (event, toggleOptions, toggleForm) => {
+  event.stopPropagation();
+  toggleOptions();
+  toggleForm();
+}
+
 export default props => {
-  const { toggleOptions, dispatch, list } = props;
+  const { toggleOptions, dispatch, list, toggleForm } = props;
   const { owner } = list;
 
   return (
@@ -34,7 +40,7 @@ export default props => {
         {owner && <options-option onClick={(event) => optionTogglePublic(event, toggleOptions, dispatch, list)}>
           Make {list.public ? 'Private' : 'Public'}
         </options-option>}
-        {owner && <options-option>Edit</options-option>}
+        {owner && <options-option onClick={event => optionEditList(event, toggleOptions, toggleForm)}>Edit</options-option>}
         <options-option-red onClick={(event) => optionRemoveList(event, toggleOptions, dispatch, list)}>Remove</options-option-red>
       </options>
     </options-bg>
