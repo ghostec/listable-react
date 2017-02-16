@@ -7,7 +7,7 @@
     "test": "mocha",
     "build": "ENV=prd apiURL=https://listable-express.herokuapp.com webpack -p",
     "http-server": "http-server ./build",
-    "dev-server": "ENV=dev webpack-dev-server --host 192.168.1.11",
+    "dev-server": "ENV=dev webpack-dev-server --host 192.168.1.5",
     "start": "node server.js"
   },
   "author": "",
