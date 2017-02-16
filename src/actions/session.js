@@ -3,8 +3,8 @@ import routes from 'constants/routes';
 import * as navigation from 'actions/navigation';
 
 export const signIn = (email, password) => {
-  return (dispatch) => {
-    return fetch(`${apiPath}/users/authenticate`, {
+  return async dispatch => {
+    const response = await fetch(`${apiPath}/users/authenticate`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -14,19 +14,24 @@ export const signIn = (email, password) => {
         email: email,
         password: password
       })
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
+    });
+
+    const json = await response.json();
+
+    if(response.status >= 400) {
+      if(json.errors) {
+        if(json.errors.user) throw new Error(json.errors.user.message);
       }
-      return response.json();
-    })
-    .then(data => dispatch({ type: 'SESSION/SET_TOKEN', ...data }));
+      throw new Error("Bad response from server.");
+    }
+
+    dispatch({ type: 'SESSION/SET_TOKEN', ...json });
   }
 }
 
 export const signUp = (name, email, password) => {
-  return (dispatch) => {
-    return fetch(`${apiPath}/users`, {
+  return async (dispatch) => {
+    const response = await fetch(`${apiPath}/users`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -37,13 +42,20 @@ export const signUp = (name, email, password) => {
         email,
         password
       })
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
+    });
+
+    const json = await response.json();
+
+    if(response.status >= 400) {
+      if(json.errors) {
+        if(json.errors.name) throw new Error(json.errors.name.message);
+        if(json.errors.email) throw new Error(json.errors.email.message);
+        if(json.errors.password) throw new Error(json.errors.password.message);
       }
-      return response.json();
-    })
-    .then(data => dispatch({ type: 'SESSION/SET_TOKEN', ...data }));
+      throw new Error("Bad response from server.");
+    }
+
+    dispatch({ type: 'SESSION/SET_TOKEN', ...json });
   }
 }
 

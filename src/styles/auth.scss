@@ -45,6 +45,7 @@ auth-header-state {
 }
 
 auth-form {
+  @include max-width-container;
   margin-top: 15px;
   text-align: center;
 }

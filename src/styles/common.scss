@@ -53,3 +53,19 @@ common-empty {
     margin-right: 10px;
   }
 }
+
+toast {
+  position: fixed;
+  width: 100%;
+  bottom: 80px;
+  text-align: center;
+  z-depth: 9999;
+}
+
+toast-message {
+  @include max-width-container;
+  @include secondary-font(16px, white, 400);
+  padding: 10px 0;
+  background: $color-dark-gray;
+  text-align: center;
+}

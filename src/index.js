@@ -9,6 +9,7 @@ import store from './reducers/index';
 import RoutesComponents from './constants/routes_components';
 import * as navigation from './actions/navigation';
 import routes from './constants/routes';
+import Toast from 'components/common/toast';
 import _ from 'lodash';
 
 
@@ -29,22 +30,58 @@ var onHashChange = () => {
 window.addEventListener('hashchange', onHashChange, false);
 onHashChange();
 
-const App = (props) => {
-  const { rehydrated } = props.storage.toObject();
-  if(!rehydrated) return <div/>;
+class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const location = props.navigation.get('location');
-  const token = props.session.get('token', undefined);
+    this.state = {
+      toast_message: null
+    }
 
-  let route = (location && RoutesComponents[location.name]) || RoutesComponents.default;
-  if(token == undefined && route.public != true) {
-    route = RoutesComponents.redirect('auth');
+    _.bindAll(this, 'showToast');
   }
 
-  return route.component;
+  showToast(toast_message) {
+    this.setState({
+      ...this.state,
+      toast_message
+    });
+
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        toast_message: null
+      });
+    }, 2000);
+  }
+
+  render() {
+    const { rehydrated } = this.props;
+    if(!rehydrated) return <div />;
+
+    const { location, token } = this.props;
+
+    let route = (location && RoutesComponents[location.name]) || RoutesComponents.default;
+    if(!token && route.public != true) {
+      route = RoutesComponents.redirect('auth');
+    }
+
+    return (
+      <app>
+        {this.state.toast_message && <Toast message={this.state.toast_message}/>}
+        <route.component {...route.props} showToast={this.showToast} />
+      </app>
+    );
+  }
 }
 
-const AppContainer = connect(state => state)(App);
+const AppContainer = connect(state => {
+  return {
+    rehydrated: state.storage.get('rehydrated'),
+    location: state.navigation.get('location'),
+    token: state.session.get('token')
+  }
+})(App);
 
 const APP_NODE = document.getElementById('app')
 

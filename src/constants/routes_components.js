@@ -10,30 +10,33 @@ import Search from 'containers/search';
 
 const RoutesComponents = {
   root: {
-    component: <Root />,
+    component: Root,
     public: true
   },
   auth: {
-    component: <Auth />,
+    component: Auth,
     public: true
   },
   redirect: (location) => {
     return {
-      component: <RedirectTo location={location} />,
+      component: RedirectTo,
+      props: {
+        location
+      },
       public: true
     }
   },
   home: {
-    component: <Home />
+    component: Home
   },
   list: {
-    component: <List />
+    component: List
   },
   user: {
-    component: <User />
+    component: User
   },
   search: {
-    component: <Search />
+    component: Search
   },
   default: {
     component: <div>default</div>

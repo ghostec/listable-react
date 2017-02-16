@@ -26,7 +26,7 @@ const signUp = async (dispatch, name, email, password) => {
 
 class Auth extends Form {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       ...this.state,
@@ -48,7 +48,7 @@ class Auth extends Form {
 
     const { form, FormComponent } = this.state;
     const { name, email, password } = form;
-    const { dispatch } = this.props;
+    const { dispatch, showToast } = this.props;
     const { toggleProcessing } = this;
 
     toggleProcessing();
@@ -58,6 +58,7 @@ class Auth extends Form {
       else if(FormComponent == SignUpForm) await signUp(dispatch, name, email, password);
     } catch(err) {
       toggleProcessing();
+      showToast(err.message);
     }
   }
 
@@ -94,24 +95,24 @@ class Auth extends Form {
 
   render() {
     const { token } = this.props;
-    if(token != undefined) return <RedirectTo location='home' />;
+    if(token) return <RedirectTo location='home' />;
 
     const { handleSubmit, handleChange, showForgotPassword, showSignIn, showSignUp } = this;
     const { processing, FormComponent, Footer, form, form_header } = this.state;
 
     return (
       <auth>
-      <auth-wrap>
-      <Header form_header={form_header}/>
-      <auth-form>
-      <form onSubmit={handleSubmit}>
-      <FormComponent form={form} handleChange={handleChange} />
-      {!processing && <input id="auth-form-submit-ok" type="submit" value="" />}
-      {processing && <Spinner />}
-      </form>
-      </auth-form>
-      </auth-wrap>
-      <Footer showForgotPassword={showForgotPassword} showSignIn={showSignIn} showSignUp={showSignUp} />
+        <auth-wrap>
+          <Header form_header={form_header}/>
+          <auth-form>
+            <form onSubmit={handleSubmit}>
+              <FormComponent form={form} handleChange={handleChange} />
+              {!processing && <input id="auth-form-submit-ok" type="submit" value="" />}
+              {processing && <Spinner />}
+            </form>
+          </auth-form>
+        </auth-wrap>
+        <Footer showForgotPassword={showForgotPassword} showSignIn={showSignIn} showSignUp={showSignUp} />
       </auth>
     );
   }
