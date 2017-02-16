@@ -2,7 +2,9 @@ import React from 'react';
 import update from 'react-addons-update';
 import { bindAll } from 'lodash';
 
-class Form extends React.Component {
+import Form from 'containers/common/form';
+
+class SearchForm extends Form {
   constructor(props) {
     super(props)
 
@@ -14,14 +16,8 @@ class Form extends React.Component {
   }
 
   handleChange(event) {
-    const { search } = this.props;
-
-    search(event.target.value);
-
-    var newState = update(this.state, {
-      [event.target.id]: {$set: event.target.value}
-    });
-    this.setState(newState);
+    this.props.search(event.target.value);
+    super.handleChange(event);
   }
 
   render() {
@@ -34,4 +30,4 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+export default SearchForm;

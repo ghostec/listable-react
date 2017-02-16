@@ -1,11 +1,10 @@
 @import 'global';
 
 user-topbar-center {
-  @include secondary-font(24px, $color-black, 400);
+  @include secondary-font(20px, $color-black, 400);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
 
   img {
     @include border-radius(50%);
