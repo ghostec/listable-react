@@ -15,23 +15,33 @@ auth-wrap {
 }
 
 auth-header {
+  position: relative;
   width: 100%;
   display: block;
   text-align: center;
   height: $auth-header-height;
   padding-top: 48px;
   margin-bottom: 15px;
-  background: $color-blue;
+  background: white;
 }
 
 auth-header-logo {
-  @include secondary-font(48px, white, 700);
+  @include primary-font(48px, $color-black, 700);
   display: block;
 }
 
 auth-header-description {
-  @include secondary-font(20px, white, 400);
+  @include secondary-font(20px, $color-gray, 400);
   display: block;
+}
+
+auth-header-state {
+  @include primary-font(24px, $color-black, 700);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
 }
 
 auth-form {
@@ -67,7 +77,7 @@ auth-form input:focus {
 }
 
 auth-footer {
-  @include primary-font(20px);
+  @include primary-font(20px, $weight: 700);
   text-align: center;
   display: block;
   width: 100%;
@@ -76,6 +86,7 @@ auth-footer {
 
   > * {
     margin-right: 40px;
+    cursor: pointer;
 
     &:last-child {
       margin-right: 0;

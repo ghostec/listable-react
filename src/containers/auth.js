@@ -2,17 +2,17 @@ import React from 'react';
 import update from 'react-addons-update';
 import { connect } from 'react-redux';
 
-import "../styles/auth";
+import "styles/auth";
 
 import RedirectTo from './redirect_to';
-import Header from '../components/auth/header';
-import SignInForm from '../components/auth/form/sign_in';
-import SignUpForm from '../components/auth/form/sign_up';
-import ForgotPasswordForm from '../components/auth/form/forgot_password';
-import SignInFooter from '../components/auth/footer/sign_in';
-import SignUpFooter from '../components/auth/footer/sign_up';
-import ForgotPasswordFooter from '../components/auth/footer/forgot_password';
-import * as session from '../actions/session';
+import Header from 'components/auth/header';
+import SignInForm from 'components/auth/form/sign_in';
+import SignUpForm from 'components/auth/form/sign_up';
+import ForgotPasswordForm from 'components/auth/form/forgot_password';
+import SignInFooter from 'components/auth/footer/sign_in';
+import SignUpFooter from 'components/auth/footer/sign_up';
+import ForgotPasswordFooter from 'components/auth/footer/forgot_password';
+import * as session from 'actions/session';
 
 class Auth extends React.Component {
   constructor(props) {
@@ -90,7 +90,7 @@ class Auth extends React.Component {
     return (
       <auth>
         <auth-wrap>
-          <Header />
+          <Header {...this.state}/>
           {this.state.show_sign_in && <SignInForm form={this.state.form} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
           {this.state.show_sign_up && <SignUpForm form={this.state.form} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
           {this.state.show_forgot_password && <ForgotPasswordForm form={this.state.form} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />}
