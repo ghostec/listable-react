@@ -16,12 +16,13 @@ class User extends React.Component {
 
   componentDidMount() {
     const { user_id, users, dispatch } = this.props;
-    document.title = `${users[user_id].name} - Listavel`;
-    dispatch(listsFromUser(user_id));
+        dispatch(listsFromUser(user_id));
   }
   
   render() {
     const { lists, users, user_id, dispatch } = this.props;
+
+    document.title = (users && users[user_id] && `${users[user_id].name} - Listavel`) || 'Listavel';
 
     return (
       <user>
