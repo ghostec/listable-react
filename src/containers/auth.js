@@ -90,6 +90,7 @@ class Auth extends Form {
   }
 
   componentDidMount() {
+    document.title = 'Listavel';
     this.showSignIn();
   }
 

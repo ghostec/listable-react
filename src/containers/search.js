@@ -36,6 +36,7 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Listavel';
     this.search('');
   }
   

@@ -20,6 +20,10 @@ class Home extends React.Component {
     this.toggleForm = this.toggleForm.bind(this);
     this.toggleOptions = this.toggleOptions.bind(this);
   }
+  
+  componentDidMount() {
+    document.title = 'Listavel';
+  }
 
   toggleForm() {
     this.setState({

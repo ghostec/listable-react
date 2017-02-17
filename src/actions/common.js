@@ -88,8 +88,8 @@ export const removeRemote = (obj, singular, plural, delete_url) => {
 
 export const remove = (obj, singular, plural, delete_url) => async dispatch => {
   try {
-    await removeRemote(obj, singular, plural, delete_url);
-    dispatch(afterRemove(obj, singular, plural, delete_url)); 
+    await dispatch(removeRemote(obj, singular, plural, delete_url));
+    dispatch(afterRemove(obj, singular, plural)); 
   } catch(err) {
     console.log(err);
   }

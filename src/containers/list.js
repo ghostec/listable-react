@@ -44,6 +44,9 @@ class List extends React.Component {
 
   componentDidMount() {
     const { list_id, list, dispatch } = this.props;
+
+    document.title = `${list.name} - Listavel`;
+
     dispatch(lists.get(list_id));
     dispatch(list_items.fromList(list_id));
     dispatch(user_list_items.fromList(list_id));

@@ -18,7 +18,7 @@ const Center = props => {
   const { search } = props;
 
   return (
-    <span>Listabble</span>
+    <span>Listavel</span>
   );
 }
 

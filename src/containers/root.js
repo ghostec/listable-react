@@ -7,7 +7,6 @@ import * as session from '../actions/session';
 
 const Root = (props) => {
     const { token } = props;
-    console.log(token);
     return <RedirectTo location={token ? 'home' : 'auth'} />;
 }
 

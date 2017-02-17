@@ -15,7 +15,8 @@ class User extends React.Component {
   }
 
   componentDidMount() {
-    const { user_id, dispatch } = this.props;
+    const { user_id, users, dispatch } = this.props;
+    document.title = `${users[user_id].name} - Listavel`;
     dispatch(listsFromUser(user_id));
   }
   
