@@ -29,6 +29,6 @@ export default connect(state => {
   return {
     user_id: getUserId(state),
     lists: getLists(state),
-    users: getUsers(state)
+    users: getUsers(state),
   };
 })(ListsContainer);

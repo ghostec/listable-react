@@ -39,23 +39,26 @@ export const remove = list => async dispatch => {
   }
 };
 
-export const fromUser = (user_id) => {
-  return (dispatch, getState) => {
+export const fromUser = user_id => {
+  return async (dispatch, getState) => {
     const token = getState().session.get('token');
 
-    return fetch(`${apiPath}/users/${user_id}/lists`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'x-access-token': token
-      }
-    }).then(response => {
-      if (response.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-      return response.json();
-    }).then(({ lists, users }) => {
+    dispatch({ type: 'USER_LISTS/FETCH', user_id });
+
+    try {
+      const response = await fetch(`${apiPath}/users/${user_id}/lists`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        }
+      });
+
+      if (response.status >= 400) throw new Error("Bad response from server");
+
+      const { lists, users } = await response.json();
+
       const lists_normalized = Immutable.fromJS(lists.reduce((obj, list) => {
         obj[list._id] = list;
         return obj;
@@ -70,10 +73,9 @@ export const fromUser = (user_id) => {
       if(!lists_normalized.equals(state_lists)) {
         dispatch({ type: 'LISTS/BATCH', lists: lists_normalized });
         dispatch({ type: 'USER_LISTS/FROM_USER', user_id, lists: Immutable.List(user_lists) });
-
-
-        dispatch({ type: 'USERS/BATCH', users: users_normalized });
       }
+
+      dispatch({ type: 'USER_LISTS/FETCH_DONE', user_id });
 
       const users_normalized = Immutable.fromJS(users.reduce((obj, user) => {
         obj[user._id] = user;
@@ -87,11 +89,11 @@ export const fromUser = (user_id) => {
       if(!users_normalized.equals(state_users)) {
         dispatch({ type: 'USERS/BATCH', users: users_normalized });
       }
-    }).catch(err => {
+    } catch(err) {
       if(!user_id) dispatch(signOut);
-    }); 
+    }
   }
-};
+}
 
 export const get = list_id => {
   return (dispatch, getState) => {
