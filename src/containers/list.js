@@ -56,7 +56,7 @@ class List extends React.Component {
     const { show_form, options_component } = this.state;
     const { owner, list, n_items, dispatch } = this.props;
 
-    document.title = (list.name && `${list.name} - Listavel`) || 'Listavel';
+    document.title = (list && `${list.name} - Listavel`) || 'Listavel';
 
     if(!list) return <Spinner />;
 

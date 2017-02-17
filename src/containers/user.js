@@ -16,7 +16,7 @@ class User extends React.Component {
 
   componentDidMount() {
     const { user_id, users, dispatch } = this.props;
-        dispatch(listsFromUser(user_id));
+    dispatch(listsFromUser(user_id));
   }
   
   render() {
