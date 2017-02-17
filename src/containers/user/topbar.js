@@ -13,6 +13,8 @@ const Left = () => <BackButton />;
 const Center = props => {
   const { user } = props;
 
+  if(!user) return <div />
+
   return (
     <user-topbar-center>
       <img src={profilePicturePath(user, 'small')} />

@@ -33,5 +33,5 @@ export const isSaved = state => {
   const user_id = getUserId(state);
   const list_id = getResourceId(state);
 
-  return !!state.user_lists.get(user_id).find(el => el == list_id);
+  return (state.user_lists.get(user_id) && !!state.user_lists.get(user_id).find(el => el == list_id));
 }
