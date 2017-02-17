@@ -1,6 +1,5 @@
 import { apiPath } from 'helpers/common';
-import routes from 'constants/routes';
-import * as navigation from 'actions/navigation';
+import { history } from 'history';
 
 export const signIn = (email, password) => {
   return async dispatch => {
@@ -60,8 +59,8 @@ export const signUp = (name, email, password) => {
 }
 
 export const signOut = () => {
-  return (dispatch) => {
-    dispatch(navigation.backBegin(routes.generate('root')));
+  return dispatch => {
     dispatch({ type: 'SESSION/DISCARD_TOKEN' });
+    history.push('/');
   }
 }

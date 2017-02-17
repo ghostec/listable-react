@@ -4,21 +4,11 @@ import { connect } from 'react-redux';
 import 'styles/user';
 
 import TopBar from 'components/common/topbar';
-import routes from 'constants/routes';
-import redirect from 'helpers/redirect';
-import { backBegin as navigationBack } from 'actions/navigation';
+import BackButton from 'components/common/back_button';
 import { get as getUser } from 'actions/users';
 import { profilePicturePath } from 'helpers/s3';
 
-const Left = props => {
-  const { dispatch } = props;
-
-  const back = () => dispatch(navigationBack(routes.generate('home')));
-
-  return (
-    <img src="images/back.svg" onClick={back} />
-  );
-}
+const Left = () => <BackButton />;
 
 const Center = props => {
   const { user } = props;
@@ -46,9 +36,9 @@ class TopBarContainer extends React.Component {
   }
 
   render() {
-    const { user, dispatch } = this.props;
+    const { user } = this.props;
 
-    return <TopBar left={<Left dispatch={dispatch} />}
+    return <TopBar left={<Left />}
               center={<Center user={user} />}
               right={<Right />}/>;
   }

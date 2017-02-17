@@ -4,7 +4,7 @@ import 'styles/common';
 
 const Empty = props => {
   return (
-    <common-empty><img src='images/sad.svg' /> Empty</common-empty>
+    <common-empty><img src='/images/sad.svg' /> Empty</common-empty>
   );
 }
 

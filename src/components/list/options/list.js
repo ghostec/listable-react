@@ -3,8 +3,7 @@ import React from 'react';
 import 'styles/options';
 
 import { patch as patchList, remove as removeList } from 'actions/lists';
-import { backBegin as navigationBack } from 'actions/navigation';
-import routes from 'constants/routes';
+import { history } from 'history';
 
 const optionTogglePublic = (event, toggleOptions, dispatch, list) => {
   toggleOptions();
@@ -19,7 +18,7 @@ const optionRemoveList = async (event, toggleOptions, dispatch, list) => {
   toggleOptions();
   try {
     await dispatch(removeList(list));
-    dispatch(navigationBack(routes.generate('home')));
+    history.goBack();
   } catch(err) {
     console.log(err)
   }

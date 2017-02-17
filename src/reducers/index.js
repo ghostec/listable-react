@@ -4,7 +4,6 @@ import {persistStore, autoRehydrate} from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
 import {enableBatching} from 'redux-batched-actions';
 
-import navigation from './navigation';
 import storage from './storage';
 import session from './session';
 import lists from './lists';
@@ -14,7 +13,6 @@ import user_list_items from './user_list_items';
 import users from './users';
 
 const appReducer = combineReducers({
-  navigation,
   storage,
   session,
   lists,
@@ -35,7 +33,6 @@ const rootReducer = (state, action) => {
 
 const store = compose(applyMiddleware(thunk))(createStore)(enableBatching(rootReducer), undefined, autoRehydrate());
 persistStore(store, {
-  blacklist: ['navigation'],
   transforms: [immutableTransform()]
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import redirect from '../helpers/redirect';
+import { history } from 'history';
 
 class RedirectTo extends React.Component {
   constructor(props) {
@@ -8,11 +8,11 @@ class RedirectTo extends React.Component {
   }
 
   componentWillMount() {
-    redirect(this.props.location);
+    history.push(this.props.location);
   }
 
   render() {
-    return <div></div>
+    return <div />
   };
 }
 

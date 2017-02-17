@@ -4,11 +4,11 @@ import 'styles/common';
 
 import { profilePicturePath } from 'helpers/s3';
 import routes from 'constants/routes';
-import redirect from 'helpers/redirect';
+import { history } from 'history';
 
 const goToUser = (event, user_id) => {
   event.stopPropagation();
-  redirect(routes.generate('user', { id: user_id }));
+  history.push(routes.generate('user', { id: user_id }));
 }
 
 export default props => {
@@ -18,7 +18,7 @@ export default props => {
     <common-list-info onClick={onClickHandler}>
       <common-list-info-name>
         {list.name}
-        {!list.public && <img src="images/padlock.svg" />}
+        {!list.public && <img src="/images/padlock.svg" />}
       </common-list-info-name>
       {user && <common-list-info-user onClick={event => goToUser(event, user._id)}>
         <img src={profilePicturePath(user, 'small')} />

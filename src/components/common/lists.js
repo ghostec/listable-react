@@ -4,13 +4,13 @@ import { isEmpty } from 'lodash';
 import 'styles/common';
 
 import routes from 'constants/routes';
-import redirect from 'helpers/redirect';
+import { history } from 'history';
 import ListInfo from 'components/common/list_info';
 import Empty from 'components/common/empty';
 import Spinner from 'components/common/spinner';
 
 const goToList = list => {
-  redirect(routes.generate('list', { id: list._id}));
+  history.push(routes.generate('list', { id: list._id}));
 }
 
 export default props => {

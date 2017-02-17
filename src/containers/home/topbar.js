@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import TopBar from 'components/common/topbar';
 import Options from 'containers/home/options/options';
 import routes from 'constants/routes';
-import redirect from 'helpers/redirect';
+import { history } from 'history';
 
 const Left = props => {
   const { options, toggleOptions } = props;
 
   return (
-    <img src="images/more.svg" onClick={event => toggleOptions(event, options)} />
+    <img src="/images/more.svg" onClick={event => toggleOptions(event, options)} />
   );
 }
 
@@ -24,11 +24,11 @@ const Center = props => {
 
 const Right = props => {
   const goToSearch = () => {
-    redirect(routes.generate('search'));
+    history.push(routes.generate('search'));
   }
 
   return (
-    <img src="images/search.svg" onClick={goToSearch} />
+    <img src="/images/search.svg" onClick={goToSearch} />
   );
 }
 

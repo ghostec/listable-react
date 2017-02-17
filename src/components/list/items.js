@@ -21,11 +21,11 @@ const Done = props => {
   const { done } = user_item;
 
   const donePart = (
-    <img src="images/ring-checked.svg" />
+    <img src="/images/ring-checked.svg" />
   );
 
   const notDonePart = [
-    <img src="images/open-ring-blue.svg" />,
+    <img src="/images/open-ring-blue.svg" />,
     "done"
   ].map((v, k) => <span key={k}>{v}</span>);
 
@@ -44,7 +44,7 @@ const Item = props => {
     <list-item onClick={(event) => toggleOptions(event, options_component)}>
       <list-item-info>
         <list-item-info-left>
-          <img src={`images/${item.type}.svg`} />
+          <img src={`/images/${item.type}.svg`} />
         </list-item-info-left>
         <list-item-info-right>
           {(user_item && user_item.owner) && <Done user_item={user_item} dispatch={dispatch} />}

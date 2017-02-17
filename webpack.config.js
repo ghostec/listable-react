@@ -61,5 +61,10 @@ module.exports = {
     new webpack.EnvironmentPlugin([
       "ENV", "apiURL"
     ])
-  ]
+  ],
+  devServer: {
+    port: 8080,
+    contentBase: BUILD_DIR,
+    historyApiFallback: true
+  }
 };
