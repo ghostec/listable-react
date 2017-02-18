@@ -7,6 +7,7 @@ import { Provider, connect } from 'react-redux';
 
 import store from './reducers/index';
 import Toast from 'components/common/toast';
+import RedirectTo from 'containers/redirect_to';
 import _ from 'lodash';
 import { history, resolve } from 'history';
 
@@ -41,7 +42,7 @@ class App extends React.Component {
 
     const { route, token } = this.props;
 
-    if(!token && route.public != true) history.push('auth');
+    if(!token && route.public != true) return <RedirectTo location={'/auth'} />;
 
     return (
       <app>

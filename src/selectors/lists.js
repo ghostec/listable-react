@@ -36,8 +36,6 @@ export const isSaved = state => {
   const list_id = getResourceId(state);
   const user_lists = getUserLists(state, user_id);
 
-  console.log(user_lists);
-
   if(user_lists.fetching && !user_lists.lists) return false;
 
   return user_lists.lists && !!user_lists.lists.find(el => el == list_id);
