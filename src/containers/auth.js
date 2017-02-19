@@ -15,14 +15,19 @@ import SignUpFooter from 'components/auth/footer/sign_up';
 import ForgotPasswordFooter from 'components/auth/footer/forgot_password';
 import Spinner from 'components/common/spinner';
 import { signIn as sessionSignIn, signUp as sessionSignUp } from 'actions/session';
+import { forgotPassword as usersForgotPassword } from 'actions/users';
 
 const signIn = async (dispatch, email, password) => {
   await dispatch(sessionSignIn(email, password));
-} 
+}
 
 const signUp = async (dispatch, name, email, password) => {
   await dispatch(sessionSignUp(name, email, password));
-} 
+}
+
+const forgotPassword = async(email) => {
+  await usersForgotPassword(email);
+}
 
 class Auth extends Form {
   constructor(props) {
@@ -56,6 +61,11 @@ class Auth extends Form {
     try {
       if(FormComponent == SignInForm) await signIn(dispatch, email, password);
       else if(FormComponent == SignUpForm) await signUp(dispatch, name, email, password);
+      else {
+        await forgotPassword(email);
+        showToast('Check your email in a few minutes');
+        toggleProcessing();
+      }
     } catch(err) {
       toggleProcessing();
       showToast(err.message);
@@ -96,7 +106,7 @@ class Auth extends Form {
 
   render() {
     const { token } = this.props;
-    if(token) return <RedirectTo location='home' />;
+    if(token) return <RedirectTo location='/home' />;
 
     const { handleSubmit, handleChange, showForgotPassword, showSignIn, showSignUp } = this;
     const { processing, FormComponent, Footer, form, form_header } = this.state;

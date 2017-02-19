@@ -2,6 +2,7 @@ import React from 'react';
 
 import Root from 'containers/root';
 import Auth from 'containers/auth';
+import ResetPassword from 'containers/reset_password';
 import RedirectTo from 'containers/redirect_to';
 import Home from 'containers/home';
 import List from 'containers/list';
@@ -15,6 +16,10 @@ const RoutesComponents = {
   },
   auth: {
     component: Auth,
+    public: true
+  },
+  reset_password: {
+    component: ResetPassword,
     public: true
   },
   redirect: (location) => {

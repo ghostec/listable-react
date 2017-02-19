@@ -62,3 +62,42 @@ export const get = (user_id) => {
   }
 };
 
+export const forgotPassword = async email => {
+  const response = await fetch(`${apiPath}/users/forgot_password`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email
+    })
+  });
+
+  if(response.status >= 400) {
+    const json = await response.json();
+    if(json.errors && json.errors.user) throw new Error(json.errors.user.message);
+    throw new Error('Bad response from server.');
+  }
+}
+
+export const resetPassword = async (user_id, token, password) => {
+  const response = await fetch(`${apiPath}/users/reset_password`, {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      user_id,
+      token,
+      password
+    })
+  });
+
+  if(response.status >= 400) {
+    const json = await response.json();
+    if(json.errors && json.errors.user) throw new Error(json.errors.user.message);
+    throw new Error('Bad response from server.');
+  }
+}
